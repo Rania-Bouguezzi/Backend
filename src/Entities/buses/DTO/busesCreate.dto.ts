@@ -5,7 +5,7 @@ export class CreateBus {
 
 
 
-id:number;
+id:string;
 @IsString()
 marque:string
 @IsNumber()

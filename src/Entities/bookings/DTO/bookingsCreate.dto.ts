@@ -6,7 +6,7 @@ import { typeStatus } from "src/Type/Type";
 export class CreateBooking {
 
 
-id:number;
+id:string;
 @IsNumber()
 totalPrice:number;
 dateReservation:string;

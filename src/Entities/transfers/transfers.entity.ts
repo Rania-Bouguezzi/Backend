@@ -7,8 +7,8 @@ import { typeStatus } from "src/Type/Type";
 
 @Entity()
 export class Transfer{
-    @PrimaryGeneratedColumn()
-    id:number;
+    @PrimaryGeneratedColumn('uuid')
+    id:string;
     @Column()
     from:string;
     @Column()

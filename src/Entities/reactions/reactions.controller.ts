@@ -2,12 +2,14 @@ import { Body, Controller, Delete, Get, HttpException, Param, Patch, Post } from
 import { ReactionsService } from './reactions.service';
 import { CreateReaction } from './DTO/reactionsCreate.dto';
 import { UpdateReaction } from './DTO/reactionsUpdate.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('reactions')
+@ApiTags('Reaction')
 export class ReactionsController {
     constructor(private readonly reactionService : ReactionsService){}
     @Get(':id')
-findById(@Param('id') id : number){
+findById(@Param('id') id : string){
     return this.reactionService.findOne(id);
 }
 
@@ -17,7 +19,7 @@ createReaction(@Body() reaction: CreateReaction){
 }
 
 @Patch('id')
-updateReaction(@Param('id') id:number, @Body() reaction:UpdateReaction)
+updateReaction(@Param('id') id:string, @Body() reaction:UpdateReaction)
 {   const newReac = this.reactionService.findOne(id);
     if(!newReac){
         throw new HttpException('Reaction with' +id + 'Not Found !' , 404);
@@ -26,7 +28,7 @@ updateReaction(@Param('id') id:number, @Body() reaction:UpdateReaction)
 }
 
 @Delete(':id')
-deleteReaction(@Param('id') id : number){
+deleteReaction(@Param('id') id : string){
     const react = this.reactionService.findOne(id)
     if (!react) {
         throw new HttpException('Reaction not found ', 404)

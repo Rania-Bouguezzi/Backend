@@ -2,8 +2,10 @@ import { Body, Controller, Delete, Get, HttpException, Param, Patch, Post } from
 import { AgenciesService } from './agencies.service';
 import { CreateAgency } from './DTO/agenciesCreate.dto';
 import { UpdateAgency } from './DTO/agenciesUpdate.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('agencies')
+@ApiTags('Agency')
 export class AgenciesController {
 
 constructor(private readonly agencyService: AgenciesService){}
@@ -14,7 +16,7 @@ findAll(){
 }
 
 @Get(':id')
-findOne(@Param('id') id:number){
+findOne(@Param('id') id:string){
     const agency=  this.agencyService.findOne(id)
     if(!agency){
       throw new HttpException('Agency with '+id +'Not Found !', 404)
@@ -33,7 +35,7 @@ createAgency(@Body() agency:CreateAgency){
 
     }
 @Patch(':id')
-updateAgency(@Param ('id') id:number, @Body() agency: UpdateAgency){
+updateAgency(@Param ('id') id:string, @Body() agency: UpdateAgency){
   const newAgency = this.agencyService.findOne(id)
 
   if(!newAgency){
@@ -44,7 +46,7 @@ updateAgency(@Param ('id') id:number, @Body() agency: UpdateAgency){
 }
 
 @Delete(':id')
-deleteAgency(@Param('id') id : number){
+deleteAgency(@Param('id') id : string){
     const agency = this.agencyService.findOne(id)
     if (!agency) {
         throw new HttpException('agency not found ', 404)

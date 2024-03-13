@@ -6,8 +6,8 @@ import { User } from "../users/users.entity";
 @Entity()
 export class Reaction{
 
-    @PrimaryGeneratedColumn()
-    id:number;
+    @PrimaryGeneratedColumn('uuid')
+    id:string;
     @Column({ type: 'enum', enum: ReactionType })
     reactionType:ReactionType;
     @Column()

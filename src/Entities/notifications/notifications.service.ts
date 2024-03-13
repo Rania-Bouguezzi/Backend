@@ -7,7 +7,7 @@ import { UpdateNotification } from './DTO/notificationsUpdate.dto';
 
 @Injectable()
 export class NotificationsService {
-    findById(id: number) {
+    findById(id: string) {
         throw new Error('Method not implemented.');
     }
 
@@ -21,7 +21,7 @@ export class NotificationsService {
         return this.notificationRepository.find();
     }
     
-    findOne(id:number){
+    findOne(id:string){
         return this.notificationRepository.findOne({where: {id}});
     }
     
@@ -33,7 +33,7 @@ export class NotificationsService {
        return this.notificationRepository.save(newNotif);
     }
     
-    async updateNotif(id:number ,notif: UpdateNotification): Promise<Notification>{
+    async updateNotif(id:string ,notif: UpdateNotification): Promise<Notification>{
         const update = await this.notificationRepository.findOne({where: {id}});
         this.notificationRepository.merge(update,notif);
         return await this.notificationRepository.save(update);
@@ -41,7 +41,7 @@ export class NotificationsService {
         
         
         
-        delteNotif(id:number){
+        delteNotif(id:string){
             return this.notificationRepository.delete(id);
         }
         

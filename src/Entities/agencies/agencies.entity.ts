@@ -11,8 +11,8 @@ import { typeStatus } from "src/Type/Type";
 @Entity()
 export class Agency{
 
-@PrimaryGeneratedColumn()
-id:number;
+@PrimaryGeneratedColumn('uuid')
+id:string;
 @Column()
 name:string;
 @Column()

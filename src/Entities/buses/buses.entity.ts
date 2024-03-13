@@ -6,8 +6,8 @@ import { typeStatus } from "src/Type/Type";
 
 @Entity()
 export class Bus{
-    @PrimaryGeneratedColumn()
-    id:number;
+    @PrimaryGeneratedColumn('uuid')
+    id:string;
     @Column()
     marque:string
     @Column()

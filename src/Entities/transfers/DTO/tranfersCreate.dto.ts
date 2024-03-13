@@ -8,7 +8,7 @@ import { IntegerType } from "typeorm";
 export class CreateTranfer{
 
 
-id:number;
+id:string;
 @IsString()
 from:string;
 @IsString()

@@ -15,7 +15,7 @@ findAll(){
     return this.customerRepository.find();
 }
 
-findOne(id:number){
+findOne(id:string){
     return this.customerRepository.findOne({where: {id}});
 }
 
@@ -27,7 +27,7 @@ createCustomer(customer : CreateCustomer){
    return this.customerRepository.save(newCustomer);
 }
 
-async updateCustomer(id:number ,customer: UpdateCustomer): Promise<Customer>{
+async updateCustomer(id:string ,customer: UpdateCustomer): Promise<Customer>{
     const update = await this.customerRepository.findOne({where: {id}});
     this.customerRepository.merge(update,customer);
     return await this.customerRepository.save(update);
@@ -35,7 +35,7 @@ async updateCustomer(id:number ,customer: UpdateCustomer): Promise<Customer>{
     
     
     
-    deleteCustomer(id:number){
+    deleteCustomer(id:string){
         return this.customerRepository.delete(id);
     }
     

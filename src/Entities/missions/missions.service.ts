@@ -18,7 +18,7 @@ export class MissionsService {
         return this.missionrepository.find();
     }
     
-    findOne(id:number){
+    findOne(id:string){
         return this.missionrepository.findOne({where: {id}});
     }
     
@@ -30,7 +30,7 @@ export class MissionsService {
        return this.missionrepository.save(newMission);
     }
     
-    async updateMission(id:number ,mission: UpdateMission): Promise<Mission>{
+    async updateMission(id:string ,mission: UpdateMission): Promise<Mission>{
         const update = await this.missionrepository.findOne({where: {id}});
         this.missionrepository.merge(update,mission);
         return await this.missionrepository.save(update);
@@ -38,7 +38,7 @@ export class MissionsService {
         
         
         
-        delteMission(id:number){
+        delteMission(id:string){
             return this.missionrepository.delete(id);
         }
         

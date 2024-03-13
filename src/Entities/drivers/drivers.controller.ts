@@ -2,8 +2,10 @@ import { Body, Controller, Delete, Get, HttpException, Param, Patch, Post } from
 import { DriversService } from './drivers.service';
 import { CreateDriver } from './DTO/driversCreation.dto';
 import { UpdateDriver } from './DTO/driversUpdate.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('drivers')
+@ApiTags('Driver')
 export class DriversController {
 
     constructor(private readonly driverService : DriversService){}
@@ -14,7 +16,7 @@ export class DriversController {
         return this.driverService.findAll();
     }
     @Get(':id')
-    findById(@Param('id') id : number){
+    findById(@Param('id') id : string){
       const driver = this.driverService.findOne(id);
       if (!driver){
         throw new HttpException('Driver with' + id + 'Not Found !', 404);
@@ -26,7 +28,7 @@ export class DriversController {
         return this.driverService.createDriver(driver);
     }
     @Patch(':id')
-    update(@Param ('id') id:number, @Body() driver: UpdateDriver){
+    update(@Param ('id') id:string, @Body() driver: UpdateDriver){
       const newDriver = this.driverService.findOne(id)
     
       if(!newDriver){
@@ -37,7 +39,7 @@ export class DriversController {
     }
     
     @Delete(':id')
-    delete(@Param('id') id : number){
+    delete(@Param('id') id : string){
         const driver = this.driverService.findOne(id)
         if (!driver) {
             throw new HttpException('Driver not found ', 404)

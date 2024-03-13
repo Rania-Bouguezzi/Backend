@@ -10,7 +10,7 @@ import { ReactionType, typeStatus } from "src/Type/Type";
 export class CreateReaction{
 
 
-id:number;
+id:string;
 @IsIn(Object.values(ReactionType))
 reactionType:ReactionType;
 @IsDateString()

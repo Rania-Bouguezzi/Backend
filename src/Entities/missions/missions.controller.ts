@@ -2,14 +2,16 @@ import { Body, Controller, Delete, Get, HttpException, Param, Patch, Post } from
 import { MissionsService } from './missions.service';
 import { CreateMission } from './DTO/missionsCreate.dto';
 import { UpdateMission } from './DTO/missionsUpdate.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('missions')
+@ApiTags('Mission')
 export class MissionsController {
 
     constructor(private readonly missionService : MissionsService){}
 
     @Get(':id')
-findById(@Param('id') id : number){
+findById(@Param('id') id : string){
     return this.missionService.findOne(id);
 }
 
@@ -19,7 +21,7 @@ createMission(@Body() mission: CreateMission){
 }
 
 @Patch('id')
-updateMission(@Param('id') id:number, @Body() mission:UpdateMission)
+updateMission(@Param('id') id:string, @Body() mission:UpdateMission)
 { const newMission = this.missionService.findOne(id);
     
     if(!newMission){
@@ -30,7 +32,7 @@ updateMission(@Param('id') id:number, @Body() mission:UpdateMission)
 }
 
 @Delete(':id')
-deleteMission(@Param('id') id : number){
+deleteMission(@Param('id') id : string){
     const mission = this.missionService.findOne(id)
     if (!mission) {
         throw new HttpException('Mission not found ', 404)

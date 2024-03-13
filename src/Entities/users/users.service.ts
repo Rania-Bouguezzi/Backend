@@ -16,7 +16,7 @@ finAll()
 }
 
 
-findById(id: number){
+findById(id: string){
     const user = this.userRepository.findOne({where: {id}});
     if(!user){
         throw new HttpException('User with' + id+ 'Not Found ', 404);
@@ -32,12 +32,12 @@ createUser (user: CreateUser){
     return this.userRepository.save(newUser);
 }
 
-async updateUser(id: number, user:UpdateUser): Promise<User>{
+async updateUser(id: string, user:UpdateUser): Promise<User>{
     const update = await this.userRepository.findOne({where: {id}});
     this.userRepository.merge(update,user);
     return await this.userRepository.save(update);
 }
-    deleteUser(id:number){
+    deleteUser(id:string){
         return this.userRepository.delete(id);
     }
 }

@@ -16,7 +16,7 @@ export class DriversService {
         return this.driverRepository.find();
     }
     
-    findOne(id:number){
+    findOne(id:string){
         return this.driverRepository.findOne({where: {id}});
     }
     
@@ -28,7 +28,7 @@ export class DriversService {
        return this.driverRepository.save(newDriver);
     }
     
-    async updateDriver(id:number ,driver: UpdateDriver): Promise<Driver>{
+    async updateDriver(id:string ,driver: UpdateDriver): Promise<Driver>{
         const update = await this.driverRepository.findOne({where: {id}});
         this.driverRepository.merge(update,driver);
         return await this.driverRepository.save(update);
@@ -36,7 +36,7 @@ export class DriversService {
         
         
         
-        delteDriver(id:number){
+        delteDriver(id:string){
             return this.driverRepository.delete(id);
         }
         

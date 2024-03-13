@@ -7,7 +7,7 @@ import { typeStatus } from "src/Type/Type";
 export class CreateAgency{
 
 
-id:number;
+id:string;
 @IsString()
 name:string;
 @IsString()

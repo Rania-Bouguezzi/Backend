@@ -2,8 +2,10 @@ import { Body, Controller, Delete, Get, HttpException, Param, Patch, Post } from
 import { UsersService } from './users.service';
 import { CreateUser } from './DTO/usersCreate.dto';
 import { UpdateUser } from './DTO/usersUpdate.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('users')
+@ApiTags('Users')
 export class UsersController {
     constructor(private readonly userService : UsersService){}
 
@@ -14,7 +16,7 @@ finAll(){
 }
 
 @Get(':id')
-findById(@Param('id') id : number){
+findById(@Param('id') id : string){
     return this.userService.findById(id);
 }
 
@@ -24,7 +26,7 @@ createUser(@Body() user: CreateUser){
 }
 
 @Patch('id')
-updateUser(@Param('id') id:number, @Body() user:UpdateUser)
+updateUser(@Param('id') id:string, @Body() user:UpdateUser)
 {   const newUser = this.userService.findById(id);
     if(!newUser){
         throw new HttpException('User with' +id + 'Not Found !' , 404);
@@ -33,7 +35,7 @@ updateUser(@Param('id') id:number, @Body() user:UpdateUser)
 }
 
 @Delete(':id')
-deleteUser(@Param('id') id : number){
+deleteUser(@Param('id') id : string){
     const user = this.userService.findById(id)
     if (!user) {
         throw new HttpException('User not found ', 404)

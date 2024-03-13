@@ -15,7 +15,7 @@ export class FeedbacksService {
         return this.feedbackRepository.find();
     }
     
-    findOne(id:number){
+    findOne(id:string){
         return this.feedbackRepository.findOne({where: {id}});
     }
     
@@ -27,7 +27,7 @@ export class FeedbacksService {
        return this.feedbackRepository.save(newFeedback);
     }
     
-    async updateFeedback(id:number ,feedback: UpdateFeedback): Promise<Feedback>{
+    async updateFeedback(id:string ,feedback: UpdateFeedback): Promise<Feedback>{
         const update = await this.feedbackRepository.findOne({where: {id}});
         this.feedbackRepository.merge(update,feedback);
         return await this.feedbackRepository.save(update);
@@ -35,7 +35,7 @@ export class FeedbacksService {
         
         
         
-        delteFeedback(id:number){
+        delteFeedback(id:string){
             return this.feedbackRepository.delete(id);
         }
         

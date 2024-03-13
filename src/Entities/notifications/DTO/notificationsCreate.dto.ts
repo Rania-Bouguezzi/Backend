@@ -3,7 +3,7 @@ import { typeStatus } from "src/Type/Type";
 
 export class CreateNotification {
    
-    id:number;
+    id:string;
     @IsString()
     title:string;
     @IsString()

@@ -20,7 +20,7 @@ export class PaymentService {
         return this.paymentRepository.find();
     }
     
-    findOne(id:number){
+    findOne(id:string){
         return this.paymentRepository.findOne({where: {id}});
     }
     
@@ -31,7 +31,7 @@ export class PaymentService {
        return this.paymentRepository.save(newPay);
     }
     
-    async updatePayment(id:number ,pay: UpdatePayment): Promise<Payment>{
+    async updatePayment(id:string ,pay: UpdatePayment): Promise<Payment>{
         const update = await this.paymentRepository.findOne({where: {id}});
         this.paymentRepository.merge(update,pay);
         return await this.paymentRepository.save(update);
@@ -39,7 +39,7 @@ export class PaymentService {
         
         
         
-        deltePayment(id:number){
+        deltePayment(id:string){
             return this.paymentRepository.delete(id);
         }
         

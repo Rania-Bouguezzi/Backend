@@ -2,8 +2,10 @@ import { Body, Controller, Delete, Get, HttpException, Param, Patch, Post } from
 import { CustomersService } from './customers.service';
 import { CreateCustomer } from './DTO/customersCreate.dto';
 import { UpdateCustomer } from './DTO/customersUpdate.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('customers')
+@ApiTags('Customer')
 export class CustomersController {
 
     constructor(private readonly customerService : CustomersService){}
@@ -14,7 +16,7 @@ export class CustomersController {
         return this.customerService.findAll();
     }
     @Get(':id')
-    findById(@Param('id') id : number){
+    findById(@Param('id') id : string){
       const customer = this.customerService.findOne(id);
       if (!customer){
         throw new HttpException('Customer with' + id + 'Not Found !', 404);
@@ -26,7 +28,7 @@ export class CustomersController {
         return this.customerService.createCustomer(customer);
     }
     @Patch(':id')
-    updateCustomer(@Param ('id') id:number, @Body() customer: UpdateCustomer){
+    updateCustomer(@Param ('id') id:string, @Body() customer: UpdateCustomer){
       const newCustomer = this.customerService.findOne(id)
     
       if(!newCustomer){
@@ -37,7 +39,7 @@ export class CustomersController {
     }
     
     @Delete(':id')
-    deleteCustomer(@Param('id') id : number){
+    deleteCustomer(@Param('id') id : string){
         const customer = this.customerService.findOne(id)
         if (!customer) {
             throw new HttpException('Customer not found ', 404)

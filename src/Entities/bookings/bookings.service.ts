@@ -14,7 +14,7 @@ findAll(){
     return this.bookingRepository.find();
 }
 
-findOne(id:number){
+findOne(id:string){
     return this.bookingRepository.findOne({where: {id}});
 }
 
@@ -26,7 +26,7 @@ createBooking(booking : CreateBooking){
    return this.bookingRepository.save(newBooking);
 }
 
-async updateBooking(id:number ,booking: UpdateBooking): Promise<Booking>{
+async updateBooking(id:string ,booking: UpdateBooking): Promise<Booking>{
     const update = await this.bookingRepository.findOne({where: {id}});
     this.bookingRepository.merge(update,booking);
     return await this.bookingRepository.save(update);
@@ -34,7 +34,7 @@ async updateBooking(id:number ,booking: UpdateBooking): Promise<Booking>{
     
     
     
-    deleteBooking(id:number){
+    deleteBooking(id:string){
         return this.bookingRepository.delete(id);
     }
     

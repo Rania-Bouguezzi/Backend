@@ -2,7 +2,7 @@ import { IsBoolean, IsDate, IsDateString, IsEmail, IsIn, IsNumber, IsString } fr
 import { GenreType, UserType, typeStatus } from "src/Type/Type";
 
 export class CreateUser {
-    id: number;
+    id: string;
 
     @IsString()
     username: string;

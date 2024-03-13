@@ -5,8 +5,8 @@ import { typeStatus } from "src/Type/Type";
 @Entity()
 export class Payment{
 
-    @PrimaryGeneratedColumn()
-    id:number;
+    @PrimaryGeneratedColumn('uuid')
+    id:string;
     @Column()
     montant:number;
     @Column()

@@ -19,7 +19,7 @@ export class ReactionsService {
         return this.reactionReaction.find();
     }
     
-    findOne(id:number){
+    findOne(id:string){
         return this.reactionReaction.findOne({where: {id}});
     }
     
@@ -30,7 +30,7 @@ export class ReactionsService {
        return this.reactionReaction.save(newReaction);
     }
     
-    async updateReaction(id:number ,reaction: UpdateReaction): Promise<Reaction>{
+    async updateReaction(id:string ,reaction: UpdateReaction): Promise<Reaction>{
         const update = await this.reactionReaction.findOne({where: {id}});
         this.reactionReaction.merge(update,reaction);
         return await this.reactionReaction.save(update);
@@ -38,7 +38,7 @@ export class ReactionsService {
         
         
         
-        delteReaction(id:number){
+        delteReaction(id:string){
             return this.reactionReaction.delete(id);
         }
         

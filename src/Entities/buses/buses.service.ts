@@ -14,7 +14,7 @@ findAll(){
     return this.busRepository.find();
 }
 
-findOne(id:number){
+findOne(id:string){
     return this.busRepository.findOne({where: {id}});
 }
 
@@ -26,7 +26,7 @@ createBus(bus : CreateBus){
    return this.busRepository.save(newBus);
 }
 
-async updateBus(id:number ,bus: UpdateBus): Promise<Bus>{
+async updateBus(id:string ,bus: UpdateBus): Promise<Bus>{
     const update = await this.busRepository.findOne({where: {id}});
     this.busRepository.merge(update,bus);
     return await this.busRepository.save(update);
@@ -34,7 +34,7 @@ async updateBus(id:number ,bus: UpdateBus): Promise<Bus>{
     
     
     
-    deleteBus(id:number){
+    deleteBus(id:string){
         return this.busRepository.delete(id);
     }
     

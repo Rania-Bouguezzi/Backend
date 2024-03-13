@@ -17,7 +17,7 @@ export class SuperAgentService {
         return this.superagentRepository.find();
     }
     
-    findOne(id:number){
+    findOne(id:string){
         return this.superagentRepository.findOne({where: {id}});
     }
     
@@ -29,7 +29,7 @@ export class SuperAgentService {
        return this.superagentRepository.save(newSPA);
     }
     
-    async updateSpa(id:number ,spa: SuperAgentUpdate): Promise<SuperAgent>{
+    async updateSpa(id:string ,spa: SuperAgentUpdate): Promise<SuperAgent>{
         const update = await this.superagentRepository.findOne({where: {id}});
         this.superagentRepository.merge(update,spa);
         return await this.superagentRepository.save(update);
@@ -37,7 +37,7 @@ export class SuperAgentService {
         
         
         
-        delteSpa(id:number){
+        delteSpa(id:string){
             return this.superagentRepository.delete(id);
         }
         

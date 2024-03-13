@@ -9,8 +9,8 @@ import { typeStatus } from "src/Type/Type";
 @Entity()
 export class Mission{
 
-    @PrimaryGeneratedColumn()
-    id:number;
+    @PrimaryGeneratedColumn('uuid')
+    id:string;
     @Column()
     name:string;
     @Column()

@@ -14,7 +14,7 @@ constructor(@InjectRepository(Agency) private agencyRepository: Repository<Agenc
 findAll(){
     return this.agencyRepository.find();
 }
-findOne(id : number){
+findOne(id : string){
     return this.agencyRepository.findOne({where: {id}});
 }
 
@@ -25,13 +25,13 @@ createAgency(agency: CreateAgency){
     return this.agencyRepository.save(newAgency);
 }
 
-async update(id:number, agency: UpdateAgency): Promise<Agency>{
+async update(id:string, agency: UpdateAgency): Promise<Agency>{
     const updateAgency = await this.agencyRepository.findOne({where:{id}});
     this.agencyRepository.merge(updateAgency, agency);
     return await this.agencyRepository.save(updateAgency);
 }
 
-delete(id:number){
+delete(id:string){
      this.agencyRepository.delete(id);
      return 'Agency Deleted!'
 }

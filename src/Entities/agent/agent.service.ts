@@ -14,7 +14,7 @@ findAll(){
     return this.agentRepository.find();
 }
 
-findOne(id:number){
+findOne(id:string){
     return this.agentRepository.findOne({where: {id}});
 }
 
@@ -26,7 +26,7 @@ creatAgent(agent: CreateAgent){
     return this.agentRepository.save(newAgent);
 }
 
-async updateAgent(id:number ,agent: UpdateAgent): Promise<Agent>{
+async updateAgent(id:string ,agent: UpdateAgent): Promise<Agent>{
 const update = await this.agentRepository.findOne({where: {id}});
 this.agentRepository.merge(update,agent);
 return await this.agentRepository.save(update);
@@ -34,7 +34,7 @@ return await this.agentRepository.save(update);
 
 
 
-deleteAgent(id:number){
+deleteAgent(id:string){
     return this.agentRepository.delete(id);
 }
 

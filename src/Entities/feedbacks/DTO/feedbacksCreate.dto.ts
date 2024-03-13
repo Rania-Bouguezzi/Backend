@@ -3,7 +3,7 @@ import { typeStatus } from "src/Type/Type";
 
 export class CreateFeedback {
 
-id:number;
+id:string;
 @IsString()
 text:string;
 @IsDateString()

@@ -2,8 +2,10 @@ import { Body, Controller, Delete, Get, HttpException, Param, Patch, Post } from
 import { AgentService } from './agent.service';
 import { CreateAgent } from './DTO/agentCreation.dto';
 import { UpdateAgent } from './DTO/agentUpdate.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('agent')
+@ApiTags('Agent')
 export class AgentController {
 
 constructor(private readonly agentService : AgentService){
@@ -17,7 +19,7 @@ return this.agentService.findAll();
 }
 
 @Get(':id')
-findById(@Param('id') id : number){
+findById(@Param('id') id : string){
     const agent = this.agentService.findOne(id);
     if(!agent){
         throw new HttpException('Agent with' + id + 'Not Found !', 404);
@@ -30,7 +32,7 @@ createAgent(@Body() agent: CreateAgent){
     return this.agentService.creatAgent(agent);
 }
 @Patch(':id')
-updateAgent(@Param ('id') id:number, @Body() agent: UpdateAgent){
+updateAgent(@Param ('id') id:string, @Body() agent: UpdateAgent){
   const newagent = this.agentService.findOne(id)
 
   if(!newagent){
@@ -41,7 +43,7 @@ updateAgent(@Param ('id') id:number, @Body() agent: UpdateAgent){
 }
 
 @Delete(':id')
-deleteAgent(@Param('id') id : number){
+deleteAgent(@Param('id') id : string){
     const agent = this.agentService.findOne(id)
     if (!agent) {
         throw new HttpException('Agent not found ', 404)

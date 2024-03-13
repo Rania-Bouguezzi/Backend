@@ -4,7 +4,7 @@ import { IsNull } from "typeorm";
 
 export class CreateMission {
  
-    id:number;
+    id:string;
     @IsString()
     name:string;
     @IsString()

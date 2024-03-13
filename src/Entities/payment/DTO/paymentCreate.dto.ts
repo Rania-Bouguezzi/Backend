@@ -4,7 +4,7 @@ import { typeStatus } from "src/Type/Type";
 export class CreatePayment{
 
 
-id:number;
+id:string;
 @IsNumber()
 montant:number;
 @IsString()

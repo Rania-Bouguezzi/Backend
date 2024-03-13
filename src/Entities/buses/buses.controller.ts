@@ -2,8 +2,10 @@ import { Body, Controller, Delete, Get, HttpException, Param, Patch, Post } from
 import { BusesService } from './buses.service';
 import { CreateBus } from './DTO/busesCreate.dto';
 import { UpdateBus } from './DTO/busesUpdate.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('buses')
+@ApiTags('Bus')
 export class BusesController {
 
 constructor(private readonly busService : BusesService){}
@@ -14,7 +16,7 @@ findAll(){
     return this.busService.findAll();
 }
 @Get(':id')
-findById(@Param('id') id : number){
+findById(@Param('id') id : string){
   const bus = this.busService.findOne(id);
   if (!bus){
     throw new HttpException('Bus with' + id + 'Not Found !', 404);
@@ -26,7 +28,7 @@ createBus(@Body() bus: CreateBus){
     return this.busService.createBus(bus);
 }
 @Patch(':id')
-updateBus(@Param ('id') id:number, @Body() bus: UpdateBus){
+updateBus(@Param ('id') id:string, @Body() bus: UpdateBus){
   const newBus = this.busService.findOne(id)
 
   if(!newBus){
@@ -37,7 +39,7 @@ updateBus(@Param ('id') id:number, @Body() bus: UpdateBus){
 }
 
 @Delete(':id')
-deleteBus(@Param('id') id : number){
+deleteBus(@Param('id') id : string){
     const bus = this.busService.findOne(id)
     if (!bus) {
         throw new HttpException('Bus not found ', 404)

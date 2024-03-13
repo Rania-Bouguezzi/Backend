@@ -5,8 +5,8 @@ import { User } from "../users/users.entity";
 @Entity()
 export class Feedback {
 
-    @PrimaryGeneratedColumn()
-    id:number;
+    @PrimaryGeneratedColumn('uuid')
+    id:string;
     @Column()
     text:string;
     @Column()

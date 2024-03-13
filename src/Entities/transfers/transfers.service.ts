@@ -17,7 +17,7 @@ export class TransfersService {
         return this.transferRepository.find();
     }
     
-    findOne(id:number){
+    findOne(id:string){
         return this.transferRepository.findOne({where: {id}});
     }
     
@@ -29,7 +29,7 @@ export class TransfersService {
        return this.transferRepository.save(newTransfer);
     }
     
-    async updateTransfer(id:number ,transfer: UpdateTransfer): Promise<Transfer>{
+    async updateTransfer(id:string ,transfer: UpdateTransfer): Promise<Transfer>{
         const update = await this.transferRepository.findOne({where: {id}});
         this.transferRepository.merge(update,transfer);
         return await this.transferRepository.save(update);
@@ -37,7 +37,7 @@ export class TransfersService {
         
         
         
-        delteTransferr(id:number){
+        delteTransferr(id:string){
             return this.transferRepository.delete(id);
         }
         

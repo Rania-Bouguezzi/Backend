@@ -6,8 +6,8 @@ import { Agent } from "../agent/agent.entity";
 @Entity()
 export class Notification{
 
-    @PrimaryGeneratedColumn()
-    id:number;
+    @PrimaryGeneratedColumn('uuid')
+    id:string;
     @Column()
     title:string;
     @Column()
