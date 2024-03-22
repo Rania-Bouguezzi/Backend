@@ -8,6 +8,10 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('Payment')
 export class PaymentController {
     constructor(private readonly  paymentService : PaymentService){}
+    @Get()
+    getAll(){
+        return this.paymentService.findAll();
+    }
     @Get(':id')
 findById(@Param('id') id : string){
     return this.paymentService.findOne(id);

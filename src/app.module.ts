@@ -16,12 +16,17 @@ import { CustomersModule } from './Entities/customers/customers.module';
 import { AgentModule } from './Entities/agent/agent.module';
 import { SuperAgentModule } from './Entities/super-agent/super-agent.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+import { VilleService } from './entities/ville/ville.service';
+import { VilleController } from './entities/ville/ville.controller';
+import { VilleModule } from './entities/ville/ville.module';
 
 
 @Module({
   imports: [UsersModule, AgenciesModule, TransfersModule, BusesModule, ReactionsModule, FeedbacksModule, 
     NotificationsModule, PaymentModule, BookingsModule, MissionsModule, DriversModule, 
-    CustomersModule, AgentModule, SuperAgentModule,
+    CustomersModule, AgentModule, SuperAgentModule, VilleModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost', // IPNetwork : 172.20.0.02
@@ -33,7 +38,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       synchronize: true,
     }),
   
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client'),
+    }),
   
+    VilleModule, 
   
   
   

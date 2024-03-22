@@ -16,7 +16,7 @@ export class Transfer{
     @Column()
     date_time_Depart:string;
     @Column()
-    date_heure_Arrive:string;
+    date_time_Arrive:string;
     @Column()
     nbrePlacesDisponibles:number;
     @Column()

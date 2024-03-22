@@ -8,6 +8,10 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('Transfer')
 export class TransfersController {
     constructor(private readonly transferService : TransfersService){}
+    @Get()
+    getAll(){
+        return this.transferService.findAll()
+    }
     @Get(':id')
 findById(@Param('id') id : string){
     return this.transferService.findOne(id);

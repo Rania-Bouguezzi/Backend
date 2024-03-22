@@ -28,9 +28,9 @@ note:string;
 @IsNumber()
 extra:number;
 @IsDateString()
-dateCreation:string;
+dateCreation:string= new Date().toISOString();
 @IsDateString()
-dateUpdate:string;
+dateUpdate:string= new Date().toISOString();
 @IsIn(Object.values(typeStatus))
 status:typeStatus;
 

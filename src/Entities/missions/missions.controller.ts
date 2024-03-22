@@ -9,7 +9,10 @@ import { ApiTags } from '@nestjs/swagger';
 export class MissionsController {
 
     constructor(private readonly missionService : MissionsService){}
-
+@Get()
+findAll(){
+    return this.missionService.findAll();
+}
     @Get(':id')
 findById(@Param('id') id : string){
     return this.missionService.findOne(id);

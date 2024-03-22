@@ -12,7 +12,7 @@ export class AgenciesService {
 constructor(@InjectRepository(Agency) private agencyRepository: Repository<Agency>){}
 
 findAll(){
-    return this.agencyRepository.find();
+    return this.agencyRepository.find({ relations: ["agents"] })
 }
 findOne(id : string){
     return this.agencyRepository.findOne({where: {id}});

@@ -24,8 +24,8 @@ export class CreateMission {
     @IsDateString()
     dateMission:string;
     @IsDateString()
-    dateCreation:string;
+    dateCreation:string= new Date().toISOString();
     @IsDateString()
-    dateUpdate:string;
+    dateUpdate:string=new Date().toISOString();
 
 }
