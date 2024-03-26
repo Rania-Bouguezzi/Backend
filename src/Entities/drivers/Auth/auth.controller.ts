@@ -1,14 +1,15 @@
 import { BadRequestException, Body, Controller, Logger, Post } from '@nestjs/common';
-import { CreateUser } from '../DTO/usersCreate.dto';
+
 import * as bcrypt from 'bcrypt';
-import { AuthService } from './auth.service';
+import { AuthDriverService } from './auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { CreateDriver } from '../DTO/driversCreation.dto';
 
-@Controller('auth')
-export class AuthController {
-    private readonly logger = new Logger(AuthController.name);
-    constructor( private readonly authService: AuthService,  
+@Controller('auth/driver')
+export class AuthDriverController {
+    private readonly logger = new Logger(AuthDriverController.name);
+    constructor( private readonly authService: AuthDriverService,  
         private jwtService: JwtService,
         private readonly configService: ConfigService
         ){}
@@ -16,28 +17,28 @@ export class AuthController {
 
     
     @Post('register')
-   async Register(@Body() user:CreateUser){
+   async Register(@Body() driver:CreateDriver){
       //  const password = user.password;
-        const hashedPassword =  await bcrypt.hash(user.password, 12);
+        const hashedPassword =  await bcrypt.hash(driver.password, 12);
         console.log(hashedPassword);
-        user.password=hashedPassword;
-        return this.authService.createUser(user)
+        driver.password=hashedPassword;
+        return this.authService.createUser(driver)
     }
     @Post('login')
     async login(@Body('email') email: string, @Body('password') password: string) {
-        const user = await this.authService.find({ email });
-        if (!user) {
+        const driver = await this.authService.find({ email });
+        if (!driver) {
             throw new BadRequestException('user does not exist');
         }
-        if (!await bcrypt.compare(password, user.password)) {
+        if (!await bcrypt.compare(password, driver.password)) {
             throw new BadRequestException('invalid password');
         }
 
     //    const jwt = await this.jwtService.signAsync({id: user.id});
     const payload = {
-        username : (await user).username,
-        email : (await user).email,
-        role : user.role,
+        username : (await driver).username,
+        email : (await driver).email,
+        role : driver.role,
     } 
   //  console.log(process.env.JWT_SECRET)
     console.log(payload)

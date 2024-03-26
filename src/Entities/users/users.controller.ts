@@ -12,7 +12,7 @@ import { Role } from './decorators/role.decorator';
 export class UsersController {
     constructor(private readonly userService : UsersService){}
 
-@Role('SuperAgent')
+@Role('Customer')
 @UseGuards(AuthentificationGuard, AuthorizationGuard)    
 @Get()
 finAll(@Req() {user} ){

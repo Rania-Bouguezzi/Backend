@@ -1,14 +1,15 @@
 import { BadRequestException, Body, Controller, Logger, Post } from '@nestjs/common';
-import { CreateUser } from '../DTO/usersCreate.dto';
+
 import * as bcrypt from 'bcrypt';
-import { AuthService } from './auth.service';
+import { AuthCustomerService } from './auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { CreateCustomer } from '../DTO/customersCreate.dto';
 
-@Controller('auth')
-export class AuthController {
-    private readonly logger = new Logger(AuthController.name);
-    constructor( private readonly authService: AuthService,  
+@Controller('auth/customer')
+export class AuthCustomerController {
+    private readonly logger = new Logger(AuthCustomerController.name);
+    constructor( private readonly authService: AuthCustomerService,  
         private jwtService: JwtService,
         private readonly configService: ConfigService
         ){}
@@ -16,28 +17,28 @@ export class AuthController {
 
     
     @Post('register')
-   async Register(@Body() user:CreateUser){
+   async Register(@Body() customer:CreateCustomer){
       //  const password = user.password;
-        const hashedPassword =  await bcrypt.hash(user.password, 12);
+        const hashedPassword =  await bcrypt.hash(customer.password, 12);
         console.log(hashedPassword);
-        user.password=hashedPassword;
-        return this.authService.createUser(user)
+        customer.password=hashedPassword;
+        return this.authService.createUser(customer)
     }
     @Post('login')
     async login(@Body('email') email: string, @Body('password') password: string) {
-        const user = await this.authService.find({ email });
-        if (!user) {
+        const customer = await this.authService.find({ email });
+        if (!customer) {
             throw new BadRequestException('user does not exist');
         }
-        if (!await bcrypt.compare(password, user.password)) {
+        if (!await bcrypt.compare(password, customer.password)) {
             throw new BadRequestException('invalid password');
         }
 
     //    const jwt = await this.jwtService.signAsync({id: user.id});
     const payload = {
-        username : (await user).username,
-        email : (await user).email,
-        role : user.role,
+        username : (await customer).username,
+        email : (await customer).email,
+        role : customer.role,
     } 
   //  console.log(process.env.JWT_SECRET)
     console.log(payload)
