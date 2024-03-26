@@ -21,6 +21,8 @@ import { join } from 'path';
 import { VilleService } from './entities/ville/ville.service';
 import { VilleController } from './entities/ville/ville.controller';
 import { VilleModule } from './entities/ville/ville.module';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule } from '@nestjs/config';
 
 
 @Module({
@@ -37,7 +39,13 @@ import { VilleModule } from './entities/ville/ville.module';
       autoLoadEntities: true,
       synchronize: true,
     }),
-  
+    ConfigModule.forRoot(),
+    JwtModule.register({
+      global : true,
+       secret: process.env.JWT_SECRET, 
+       signOptions: { expiresIn: '1d' },
+     }),
+
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'client'),
     }),

@@ -1,16 +1,22 @@
-import { Body, Controller, Delete, Get, HttpException, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUser } from './DTO/usersCreate.dto';
 import { UpdateUser } from './DTO/usersUpdate.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { AuthentificationGuard } from './guards/authentification.guard';
+import { AuthorizationGuard } from './guards/authorization.guard';
+import { Role } from './decorators/role.decorator';
 
 @Controller('users')
 @ApiTags('Users')
 export class UsersController {
     constructor(private readonly userService : UsersService){}
 
+@Role('SuperAgent')
+@UseGuards(AuthentificationGuard, AuthorizationGuard)    
 @Get()
-finAll(){
+finAll(@Req() {user} ){
+    console.log(user);
     return this.userService.finAll();
 
 }

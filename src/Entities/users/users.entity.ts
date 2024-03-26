@@ -18,7 +18,7 @@ password : string
 firstname : string;
 @Column()
 lastname : string;
-@Column()
+@Column({unique: true})
 email : string;
 @Column()
 phone : string;
