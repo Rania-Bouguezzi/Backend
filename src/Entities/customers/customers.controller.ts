@@ -48,6 +48,12 @@ export class CustomersController {
        return this.customerService.deleteCustomer(id)
     }
     
+    @Get('agency/:id')
+getCustomersByAgency(@Param('id') idAgency:string){
+return this.customerService.getCustomerByAgency(idAgency)
+}
+
+
     
     
 

@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from './users.entity';
 import { CreateUser } from './DTO/usersCreate.dto';
 import { UpdateUser } from './DTO/usersUpdate.dto';
+import { UserType, typeStatus } from 'src/Type/Type';
 
 @Injectable()
 export class UsersService {
@@ -28,6 +29,8 @@ findById(id: string){
 createUser (user: CreateUser){
     user.dateCreation = new Date().toISOString();
     user.dateUpdate = new Date().toISOString();
+    user.status = typeStatus.ACTIVE;
+    user.role = UserType.SUPERAGENT;
     const newUser = this.userRepository.create(user);
     return this.userRepository.save(newUser);
 }

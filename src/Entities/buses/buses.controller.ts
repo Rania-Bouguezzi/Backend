@@ -1,8 +1,12 @@
-import { Body, Controller, Delete, Get, HttpException, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { BusesService } from './buses.service';
 import { CreateBus } from './DTO/busesCreate.dto';
 import { UpdateBus } from './DTO/busesUpdate.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { Role } from '../users/decorators/role.decorator';
+import { UserType } from 'src/Type/Type';
+import { AuthentificationGuard } from '../users/guards/authentification.guard';
+import { AuthorizationGuard } from '../users/guards/authorization.guard';
 
 @Controller('buses')
 @ApiTags('Bus')
@@ -10,7 +14,8 @@ export class BusesController {
 
 constructor(private readonly busService : BusesService){}
 
-
+//@Role([UserType.AGENT])
+//@UseGuards(AuthentificationGuard, AuthorizationGuard)    
 @Get()
 findAll(){
     return this.busService.findAll();
@@ -48,8 +53,15 @@ deleteBus(@Param('id') id : string){
    return this.busService.deleteBus(id)
 }
 
+@Get('agency/:id')
+getBusByAgency(@Param('id') idAgency:string){
+return this.busService.getBusByAgency(idAgency)
+}
 
-
+@Get('busNumber/agency/:id')
+getNumberBus(@Param('id') idAgency:string){
+return this.busService.getBusCountByAgency(idAgency)
+}
 
 
 

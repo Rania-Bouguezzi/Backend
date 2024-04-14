@@ -7,14 +7,30 @@ import { AuthController } from './auth/auth.controller';
 import { AuthService } from './auth/auth.service';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { CustomersController } from '../customers/customers.controller';
+import { AgentController } from '../agent/agent.controller';
+import { DriversController } from '../drivers/drivers.controller';
+import { CustomersService } from '../customers/customers.service';
+import { AgentService } from '../agent/agent.service';
+import { DriversService } from '../drivers/drivers.service';
+import { Customer } from '../customers/customer.entity';
+import { Driver } from '../drivers/driver.entity';
+import { Agent } from '../agent/agent.entity';
+import { AgenciesController } from '../agencies/agencies.controller';
+import { AgenciesService } from '../agencies/agencies.service';
+import { Agency } from '../agencies/agencies.entity';
 
 
 @Module({
   imports:[
     TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([Customer]),
+    TypeOrmModule.forFeature([Driver]),
+    TypeOrmModule.forFeature([Agent]),
+    TypeOrmModule.forFeature([Agency]),
 
   ],
-  controllers: [UsersController, AuthController],
-  providers: [UsersService, AuthService, JwtService, ConfigService]
+  controllers: [UsersController, CustomersController, AgentController, AgenciesController,DriversController,AuthController],
+  providers: [UsersService, AuthService,CustomersService, AgentService, AgenciesService,DriversService ,JwtService, ConfigService]
 })
 export class UsersModule {}

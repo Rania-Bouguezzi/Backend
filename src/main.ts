@@ -9,8 +9,10 @@ import { AuthentificationGuard } from './Entities/users/guards/authentification.
 
 async function bootstrap() {
   dotenv.config();
+  
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useGlobalPipes(new ValidationPipe());
+  app.enableCors(); 
   const config = new DocumentBuilder()
   .setTitle('REST API')
   .setDescription('REST API')
@@ -19,7 +21,7 @@ async function bootstrap() {
   .build();
 const document = SwaggerModule.createDocument(app, config);
 SwaggerModule.setup('api', app, document);
-app.enableCors(); 
+
   await app.listen(3000);
 }
 bootstrap();

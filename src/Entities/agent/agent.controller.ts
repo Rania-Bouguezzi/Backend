@@ -53,8 +53,15 @@ deleteAgent(@Param('id') id : string){
 }
 
 
+@Get('agency/:id')
+getAgentByAgency(@Param('id') id : string){
+    return this.agentService.getAgentByAgency(id);
+}
 
-
+@Get('agentsNumber/agency/:id')
+getAgentNumber(@Param('id') idAgency:string){
+return this.agentService.getAgentCountByAgency(idAgency)
+}
 
 
 }

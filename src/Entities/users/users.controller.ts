@@ -6,13 +6,14 @@ import { ApiTags } from '@nestjs/swagger';
 import { AuthentificationGuard } from './guards/authentification.guard';
 import { AuthorizationGuard } from './guards/authorization.guard';
 import { Role } from './decorators/role.decorator';
+import { UserType } from 'src/Type/Type';
 
 @Controller('users')
 @ApiTags('Users')
 export class UsersController {
     constructor(private readonly userService : UsersService){}
 
-@Role('Customer')
+@Role([UserType.CUSTOMER, UserType.SUPERAGENT] )
 @UseGuards(AuthentificationGuard, AuthorizationGuard)    
 @Get()
 finAll(@Req() {user} ){
@@ -31,7 +32,7 @@ createUser(@Body() user: CreateUser){
     return this.userService.createUser(user);
 }
 
-@Patch('id')
+@Patch(':id')
 updateUser(@Param('id') id:string, @Body() user:UpdateUser)
 {   const newUser = this.userService.findById(id);
     if(!newUser){

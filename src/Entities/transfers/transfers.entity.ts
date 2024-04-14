@@ -33,8 +33,8 @@ export class Transfer{
     dateUpdate:string;
     @Column({ type: 'enum', enum: typeStatus }) 
     status:typeStatus;
-    @ManyToMany(()=> Agency, agency => agency.transfers)
-    agencies: Agency[];
+    @ManyToOne(() => Agency, agency => agency.transfers)
+    agency: Agency  
     @OneToMany(()=>Booking, booking=>booking.transfer)
     bookings:Booking[];
     @ManyToOne(() => Mission, mission => mission.transfers)

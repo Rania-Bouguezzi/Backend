@@ -3,6 +3,7 @@ import { TransfersService } from './transfers.service';
 import { CreateTranfer } from './DTO/tranfersCreate.dto';
 import { UpdateTransfer } from './DTO/tranfersUpdate.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { AuthController } from '../users/auth/auth.controller';
 
 @Controller('transfers')
 @ApiTags('Transfer')
@@ -19,10 +20,10 @@ findById(@Param('id') id : string){
 
 @Post('add')
 createTransfer(@Body() transfer: CreateTranfer){
-    return this.transferService.createTransfer(transfer);
+    return this.transferService.creatTransfert(transfer);
 }
 
-@Patch('id')
+@Patch(':id')
 updateTransfer(@Param('id') id:string, @Body() transfer:UpdateTransfer)
 {   const newTransfer = this.transferService.findOne(id);
     if(!newTransfer){
@@ -39,6 +40,16 @@ deleteTransfer(@Param('id') id : string){
     
     }
    return this.transferService.delteTransferr(id)
+}
+
+@Get('agency/:id')
+getTransferByAgency(@Param('id') idAgency:string){
+return this.transferService.getTransferByAgency(idAgency)
+}
+
+@Get('TransferNumber/agency/:id')
+getNumberBus(@Param('id') idAgency:string){
+return this.transferService.getTransferCountByAgency(idAgency)
 }
 
 

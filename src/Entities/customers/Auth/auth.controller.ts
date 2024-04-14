@@ -5,8 +5,10 @@ import { AuthCustomerService } from './auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { CreateCustomer } from '../DTO/customersCreate.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('auth/customer')
+@ApiTags('Auth Customer')
 export class AuthCustomerController {
     private readonly logger = new Logger(AuthCustomerController.name);
     constructor( private readonly authService: AuthCustomerService,  

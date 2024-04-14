@@ -5,8 +5,10 @@ import { AuthAgentService } from './auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { CreateAgent } from '../DTO/agentCreation.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('auth/agent')
+@ApiTags('Auth Agent')
 export class AuthAgentController {
     private readonly logger = new Logger(AuthAgentController.name);
     constructor( private readonly authService: AuthAgentService,  
@@ -22,7 +24,7 @@ export class AuthAgentController {
         const hashedPassword =  await bcrypt.hash(agent.password, 12);
         console.log(hashedPassword);
         agent.password=hashedPassword;
-        return this.authService.createUser(agent)
+        return this.authService.creatAgent(agent)
     }
     @Post('login')
     async login(@Body('email') email: string, @Body('password') password: string) {

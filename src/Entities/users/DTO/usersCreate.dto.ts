@@ -31,7 +31,7 @@ export class CreateUser {
     @IsString()
     address: string;
 
-    @IsIn(Object.values(UserType))
+   // @IsIn(Object.values(UserType))
     role: UserType;
 
     @IsIn(Object.values(GenreType))
@@ -112,6 +112,6 @@ export class CreateUser {
     @IsDateString()
     dateUpdate: string = new Date().toISOString();
 
-    @IsIn(Object.values(typeStatus))
+   // @IsIn(Object.values(typeStatus))
     status?: typeStatus;
 }

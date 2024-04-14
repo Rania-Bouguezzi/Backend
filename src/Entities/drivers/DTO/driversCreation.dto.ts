@@ -7,7 +7,8 @@ export class CreateDriver extends CreateUser{
 @IsString()    
 numPermis:string;
 @IsDateString()
-permisExpir:string
+permisExpir:string;
+agencyId:string;
 
 
 }

@@ -48,8 +48,16 @@ export class DriversController {
        return this.driverService.delteDriver(id)
     }
 
+    @Get('agency/:id')
+getDriversByAgency(@Param('id') idAgency:string){
+return this.driverService.getDriverByAgency(idAgency)
+}
 
 
+@Get('driversNumber/agency/:id')
+getDriversNumber(@Param('id') idAgency:string){
+return this.driverService.getDriversCountByAgency(idAgency)
+}
 
 
 

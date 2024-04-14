@@ -34,6 +34,8 @@ dateUpdate:string= new Date().toISOString();
 @IsIn(Object.values(typeStatus))
 status:typeStatus;
 
+agencyId:string;
+
 
 
 

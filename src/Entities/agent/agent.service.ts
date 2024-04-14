@@ -13,12 +13,24 @@ constructor(@InjectRepository(Agent) private agentRepository: Repository <Agent>
 private readonly agencyRepository: Repository<Agency>,){}
 
 findAll(){
-    return this.agentRepository.find();
+    return this.agentRepository.find({ relations: ['agency']});
 }
 
-findOne(id:string){
-    return this.agentRepository.findOne({where: {id}});
-}
+
+    async findOne(id: string) {
+        return this.agentRepository.findOne({ where: { id }, relations: ['agency'] });
+    }
+    
+
+
+async getAgentByAgency(idAgency:string):Promise <Agent[]>{
+    return  this.agentRepository.find(
+          {
+              where : {agency:{id :idAgency}}
+          }
+      )
+  }
+
 
 
 async creatAgent(agent: CreateAgent): Promise<Agent> {
@@ -61,6 +73,12 @@ deleteAgent(id:string){
     return this.agentRepository.delete(id);
 }
 
+
+async getAgentCountByAgency(idAgency: string): Promise<number> {
+    return this.agentRepository.count({
+      where: { agency: { id: idAgency } }
+    });
+  }
 
 
 }

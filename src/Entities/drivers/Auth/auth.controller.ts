@@ -5,8 +5,10 @@ import { AuthDriverService } from './auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { CreateDriver } from '../DTO/driversCreation.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('auth/driver')
+@ApiTags('Auth Driver')
 export class AuthDriverController {
     private readonly logger = new Logger(AuthDriverController.name);
     constructor( private readonly authService: AuthDriverService,  
@@ -22,7 +24,7 @@ export class AuthDriverController {
         const hashedPassword =  await bcrypt.hash(driver.password, 12);
         console.log(hashedPassword);
         driver.password=hashedPassword;
-        return this.authService.createUser(driver)
+        return this.authService.createDriver(driver)
     }
     @Post('login')
     async login(@Body('email') email: string, @Body('password') password: string) {

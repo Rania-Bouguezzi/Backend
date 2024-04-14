@@ -39,9 +39,11 @@ creatorAgent:string;
 updaterAgent:string;
 @OneToMany(() => Agent, agent => agent.agency)
 agents: Agent[];
-@ManyToMany(()=> Transfer, transfer => transfer.agencies)
-@JoinTable()
-transfers : Transfer[];
+// @ManyToMany(()=> Transfer, transfer => transfer.agencies)
+// @JoinTable()
+// transfers : Transfer[];
+@OneToMany(() => Transfer, transfer => transfer.agency)
+transfers: Transfer[];
 @OneToOne(() => SuperAgent, superAgent => superAgent.agency)
 superAgent: SuperAgent;
 @OneToMany(() => Driver, driver => driver.agency)
