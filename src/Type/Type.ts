@@ -26,3 +26,8 @@ export enum GenreType{
     FEMININ = "Féminin",
     MASCULIN = "Masculin"
 }
+
+export enum etatTransfer{
+    DISPO = "Available",
+    NOTDISPO = "Not Available"
+}

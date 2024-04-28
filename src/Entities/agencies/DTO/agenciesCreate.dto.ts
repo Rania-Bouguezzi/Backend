@@ -28,12 +28,6 @@ dateCreation:string = new Date().toISOString();
 dateUpdate:string = new Date().toISOString();
 @IsIn(Object.values(typeStatus))
 status:typeStatus;
-@IsNotEmpty()
-@IsString()
-creatorAgent:string;
-@IsNotEmpty()
-@IsString()
-updaterAgent:string;
 
 
 }

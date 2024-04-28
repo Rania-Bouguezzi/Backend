@@ -10,10 +10,11 @@ import { AuthAgentController } from './Auth/auth.controller';
 import { AuthAgentService } from './Auth/auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { SuperAgent } from '../super-agent/superAgent.entity';
 
 @Module({
   imports:[
-    TypeOrmModule.forFeature([Agent, Agency]),
+    TypeOrmModule.forFeature([Agent, Agency, SuperAgent]),
     AgenciesModule
   ],
   controllers: [AgentController, AuthAgentController],

@@ -7,4 +7,5 @@ export class CreateAgent extends CreateUser{
    // agencyId:string;
    //reactionId:string; 
    agencyId:string;
+   spaId:string;
 }

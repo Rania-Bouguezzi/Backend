@@ -13,7 +13,7 @@ import { UserType } from 'src/Type/Type';
 export class UsersController {
     constructor(private readonly userService : UsersService){}
 
-@Role([UserType.CUSTOMER, UserType.SUPERAGENT] )
+@Role([UserType.AGENT, UserType.SUPERAGENT] )
 @UseGuards(AuthentificationGuard, AuthorizationGuard)    
 @Get()
 finAll(@Req() {user} ){

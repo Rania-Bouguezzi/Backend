@@ -11,10 +11,11 @@ import { AuthDriverController } from './Auth/auth.controller';
 import { AuthDriverService } from './Auth/auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { SuperAgent } from '../super-agent/superAgent.entity';
 
 @Module({
   imports:[
-    TypeOrmModule.forFeature([Driver, Agency, Mission]),
+    TypeOrmModule.forFeature([Driver, Agency, Mission, SuperAgent]),
     AgenciesModule, MissionsModule
   ],
   controllers: [DriversController, AuthDriverController],

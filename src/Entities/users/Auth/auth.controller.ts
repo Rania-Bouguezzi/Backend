@@ -1,5 +1,5 @@
 
-import { BadRequestException, Body, Controller, Get, Logger, Post, Req, Res } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Logger, Param, Post, Req, Res } from '@nestjs/common';
 import { CreateUser } from '../DTO/usersCreate.dto';
 import * as bcrypt from 'bcrypt';
 import { AuthService } from './auth.service';
@@ -9,7 +9,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { AgentService } from 'src/Entities/agent/agent.service';
 
 @Controller('auth')
-@ApiTags('Auth Super Agent')
+@ApiTags('Auth Users')
 export class AuthController {
     private tokenToDestroy : String;
     private tokenData : any;
@@ -57,8 +57,8 @@ export class AuthController {
             agency:null
         };
 
-        if (user.role === 'Agent') {
-            const agent = await this.agentService.findOne(user.id); 
+        if (user.role === 'Agent' || user.role === 'SuperAgent') {
+            const agent = await this.authService.getById(user.id); 
             if (agent && agent.agency) {
                 payload.agency = {
                     id: agent.agency.id,
@@ -73,10 +73,8 @@ export class AuthController {
                    
                 };
             }
+          
         }
-
-
-      
         this.tokenData = payload;
 
         const jwt = await this.jwtService.signAsync(payload, {
@@ -101,14 +99,31 @@ export class AuthController {
     }
 
     @Get('/logout')
-    logout(@Req() req): any {
-      req.session.destroy();
-      return { msg: 'The user session has ended' }
-    }
+    logout(@Req() req, @Res() res): any {
+        if (req.session) {
+            req.session.destroy((err) => {
+                if (err) {
+                    console.error('Error destroying session:', err);
+                    return res.status(500).send({ error: 'An error occurred while destroying the session' });
+                }
+             
+                return res.send({ msg: 'The user session has ended' });
+            });
+        } else {
+            console.error('Session does not exist');
+            return res.status(401).send({ error: 'Unauthorized' });
+        }}
 
     @Get('allUsers')
     getAllUsers(){
         return this.authService.getAllUsers();
+        
+
+    }
+    @Get(':id')
+    getById(@Param('id') id:string){
+        return this.authService.getById(id);
+        
 
     }
 

@@ -1,5 +1,5 @@
 import { IsDateString, IsIn, IsNumber, IsString } from "class-validator";
-import { typeStatus } from "src/Type/Type";
+import { etatTransfer, typeStatus } from "src/Type/Type";
 import { IntegerType } from "typeorm";
 
 
@@ -21,7 +21,7 @@ date_time_Arrive:string;
 nbrePlacesDisponibles:number;
 @IsNumber()
 priceTransferForPerson:number;
-@IsString()
+@IsIn(Object.values(etatTransfer))
 etatTransfer:string;
 @IsString()
 note:string;
@@ -33,8 +33,9 @@ dateCreation:string= new Date().toISOString();
 dateUpdate:string= new Date().toISOString();
 @IsIn(Object.values(typeStatus))
 status:typeStatus;
-
+agentId:string;
 agencyId:string;
+
 
 
 

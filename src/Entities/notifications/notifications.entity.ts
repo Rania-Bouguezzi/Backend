@@ -8,14 +8,18 @@ export class Notification{
 
     @PrimaryGeneratedColumn('uuid')
     id:string;
-    @Column()
+    @Column({nullable : true})
     title:string;
     @Column()
     message:string;
-    @Column()
+    @Column({nullable : true})
     sound:string;
     @Column({ default: false })
     sending:boolean;
+    @Column()
+    agencyEmettriceName:string;
+    @Column()
+    agencyEmettriceLogo:string;
     @Column()
     sendingTime:string;
     @Column()

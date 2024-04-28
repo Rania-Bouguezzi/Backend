@@ -24,7 +24,7 @@ export class AuthAgentController {
         const hashedPassword =  await bcrypt.hash(agent.password, 12);
         console.log(hashedPassword);
         agent.password=hashedPassword;
-        return this.authService.creatAgent(agent)
+        return this.authService.creatAgent(agent);
     }
     @Post('login')
     async login(@Body('email') email: string, @Body('password') password: string) {

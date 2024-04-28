@@ -3,6 +3,8 @@ import { Agency } from "../agencies/agencies.entity";
 import { Booking } from "../bookings/bookings.entity";
 import { Mission } from "../missions/missions.entity";
 import { typeStatus } from "src/Type/Type";
+import { SuperAgent } from "../super-agent/superAgent.entity";
+import { Agent } from "../agent/agent.entity";
 
 
 @Entity()
@@ -39,6 +41,8 @@ export class Transfer{
     bookings:Booking[];
     @ManyToOne(() => Mission, mission => mission.transfers)
     mission: Mission;
+    @ManyToOne(()=> Agent, agent=>agent.transfers)
+    agent:Agent;
 
 
 

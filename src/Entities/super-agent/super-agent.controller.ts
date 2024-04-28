@@ -1,24 +1,38 @@
-import { Body, Controller, Delete, Get, HttpException, Param, Patch, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, HttpException, Param, Patch, Post } from '@nestjs/common';
 import { SuperAgentService } from './super-agent.service';
 import { SuperAgentCreate } from './DTO/superAgentCreate.dto';
 import { SuperAgentUpdate } from './DTO/superAgentUpdate.dto';
 import { ApiTags } from '@nestjs/swagger';
+import * as bcrypt from 'bcrypt';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 
 @Controller('super-agent')
 @ApiTags('Super Agent ')
 export class SuperAgentController {
-    constructor(private readonly superAgentService : SuperAgentService){}
+
+    constructor(private readonly superAgentService : SuperAgentService,private jwtService: JwtService,
+        private readonly configService: ConfigService){}
+    @Get('')
+    findSuperAgent(){
+        return this.superAgentService.findAll();
+    }
     @Get(':id')
 findById(@Param('id') id : string){
     return this.superAgentService.findOne(id);
 }
+@Post('register')
+async Register(@Body() agent:SuperAgentCreate){
 
-@Post('add')
-createSPA(@Body() spa: SuperAgentCreate){
-    return this.superAgentService.createSpA(spa);
-}
+      const hashedPassword =  await bcrypt.hash(agent.password, 12);
+      console.log(hashedPassword);
+      agent.password=hashedPassword;
+      return this.superAgentService.createSpA(agent)
+  }
 
-@Patch('id')
+
+
+@Patch(':id')
 updateSPA(@Param('id') id:string, @Body() spa:SuperAgentUpdate)
 {   const newSpa = this.superAgentService.findOne(id);
     if(!newSpa){

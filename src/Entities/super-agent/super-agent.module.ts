@@ -5,6 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SuperAgent } from './superAgent.entity';
 import { Agency } from '../agencies/agencies.entity';
 import { AgenciesModule } from '../agencies/agencies.module';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports:[
@@ -12,6 +14,6 @@ import { AgenciesModule } from '../agencies/agencies.module';
     AgenciesModule
   ],
   controllers: [SuperAgentController],
-  providers: [SuperAgentService]
+  providers: [SuperAgentService ,JwtService, ConfigService]
 })
 export class SuperAgentModule {}

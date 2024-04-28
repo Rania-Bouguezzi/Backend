@@ -7,10 +7,12 @@ import { Agency } from '../agencies/agencies.entity';
 import { Mission } from '../missions/missions.entity';
 import { AgenciesModule } from '../agencies/agencies.module';
 import { MissionsModule } from '../missions/missions.module';
+import { Agent } from '../agent/agent.entity';
+
 
 @Module({
   imports:[
-    TypeOrmModule.forFeature([Transfer, Agency,  Mission]),
+    TypeOrmModule.forFeature([Transfer, Agency,  Mission, Agent]),
     AgenciesModule, MissionsModule
   ],
   controllers: [TransfersController],

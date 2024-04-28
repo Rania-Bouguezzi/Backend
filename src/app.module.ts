@@ -23,12 +23,13 @@ import { VilleController } from './entities/ville/ville.controller';
 import { VilleModule } from './entities/ville/ville.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
+import { NeedTransferModule } from './Entities/need-transfer/need-transfer.module';
 
 
 @Module({
   imports: [UsersModule, AgenciesModule, TransfersModule, BusesModule, ReactionsModule, FeedbacksModule, 
     NotificationsModule, PaymentModule, BookingsModule, MissionsModule, DriversModule, 
-    CustomersModule, AgentModule, SuperAgentModule, VilleModule,
+    CustomersModule, AgentModule, SuperAgentModule, VilleModule, NeedTransferModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost', // IPNetwork : 172.20.0.02

@@ -4,6 +4,8 @@ import { Notification } from './notifications.entity';
 import { Repository } from 'typeorm';
 import { CreateNotification } from './DTO/notificationsCreate.dto';
 import { UpdateNotification } from './DTO/notificationsUpdate.dto';
+import { Agent } from '../agent/agent.entity';
+import { typeStatus } from 'src/Type/Type';
 
 @Injectable()
 export class NotificationsService {
@@ -13,24 +15,36 @@ export class NotificationsService {
 
 
 
-    constructor(@InjectRepository(Notification) private notificationRepository : Repository<Notification>){}
+    constructor(@InjectRepository(Notification) private notificationRepository : Repository<Notification>,
+    @InjectRepository(Agent) private agentRepository : Repository<Agent>){}
 
 
 
     findAll(){
-        return this.notificationRepository.find();
+        return this.notificationRepository.find({ relations:['agent' , 'agent.agency']});
     }
     
     findOne(id:string){
-        return this.notificationRepository.findOne({where: {id}});
+        return this.notificationRepository.findOne({where: {id},relations:['agent']},);
     }
     
+    nbNotif(){
+
+    }
     
-    createNotif(notif : CreateNotification){
-        notif.dateCreation = new Date().toISOString();
-        notif.dateUpdate= new Date().toISOString();
-       const  newNotif = this.notificationRepository.create(notif);
-       return this.notificationRepository.save(newNotif);
+    async creatNotif(notif: CreateNotification): Promise<Notification> {
+        
+        const {message,  agentId, agencyEmettriceLogo, agencyEmettriceName } = notif;
+        const agent = await this.agentRepository.findOne({ where: { id: agentId } });
+        if (!agent) {
+          throw new Error('Agent introuvable');
+        }
+        const newNotif = this.notificationRepository.create({message, agent,agencyEmettriceLogo, agencyEmettriceName});
+        newNotif.dateCreation = new Date().toDateString();
+        newNotif.dateUpdate = new Date().toDateString();
+        newNotif.status = typeStatus.ACTIVE;
+        newNotif.sendingTime =  new Date().toDateString();
+        return this.notificationRepository.save(newNotif);
     }
     
     async updateNotif(id:string ,notif: UpdateNotification): Promise<Notification>{
@@ -48,7 +62,17 @@ export class NotificationsService {
 
 
 
-
+        async getNotificationByAgency(idAgency:string):Promise <Notification[]>{
+            return  this.notificationRepository.find(
+                  {
+                    where: {
+                        agent: {
+                          agency: { id: idAgency }
+                        }
+                      }
+                  }
+              )
+          }
 
 
 

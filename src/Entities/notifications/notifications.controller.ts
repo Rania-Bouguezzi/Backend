@@ -8,6 +8,11 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('Notification')
 export class NotificationsController {
     constructor(private readonly notifService : NotificationsService){}
+@Get()
+findAll(){
+    return this.notifService.findAll();
+}
+
     @Get(':id')
 findById(@Param('id') id : string){
     return this.notifService.findOne(id);
@@ -15,10 +20,10 @@ findById(@Param('id') id : string){
 
 @Post('add')
 createNotif(@Body() notif: CreateNotification){
-    return this.notifService.createNotif(notif);
+    return this.notifService.creatNotif(notif);
 }
 
-@Patch('id')
+@Patch(':id')
 updateNotif(@Param('id') id:string, @Body() notif:UpdateNotification)
 {   const newNotif = this.notifService.findOne(id);
     if(!newNotif){
@@ -37,6 +42,9 @@ deleteNotif(@Param('id') id : string){
    return this.notifService.delteNotif(id)
 }
 
-
+@Get('agency/:id')
+getNotifByAgency(@Param('id') idAgency:string){
+return this.notifService.getNotificationByAgency(idAgency)
+}
 
 }

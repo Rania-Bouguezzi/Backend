@@ -4,21 +4,20 @@ import { typeStatus } from "src/Type/Type";
 export class CreateNotification {
    
     id:string;
-    @IsString()
     title:string;
-    @IsString()
     message:string;
-    @IsString()
     sound:string;
-    @IsBoolean()
     sending:boolean=false;
+    agencyEmettriceName:string;
+    agencyEmettriceLogo:string;
     @IsDateString()
-    sendingTime:string;
+    sendingTime:string= new Date().toISOString();
     @IsDateString()
-    dateCreation:string;
+    dateCreation:string= new Date().toISOString();
     @IsDateString()
-    dateUpdate:string;
-    @IsIn(Object.values(typeStatus))
+    dateUpdate:string= new Date().toISOString();
+  //  @IsIn(Object.values(typeStatus))
     status:typeStatus;
+    agentId:string;
 
 }

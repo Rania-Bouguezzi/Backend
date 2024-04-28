@@ -2,6 +2,7 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Agency } from "../agencies/agencies.entity";
 import { Mission } from "../missions/missions.entity";
 import { typeStatus } from "src/Type/Type";
+import { SuperAgent } from "../super-agent/superAgent.entity";
 
 
 @Entity()
@@ -9,11 +10,13 @@ export class Bus{
     @PrimaryGeneratedColumn('uuid')
     id:string;
     @Column()
-    marque:string
+    marque:string;
     @Column()
     puissance:number
+    @Column({nullable:true})
+    picture:string;
     @Column()
-    nbrePlaces:number
+    nbrePlaces:number;
     @Column()
     dateCreation:string;
     @Column()
@@ -24,6 +27,7 @@ export class Bus{
     agency:Agency;
     @ManyToOne(() => Mission, mission => mission.buses)
     mission: Mission;
-    
+    @ManyToOne(()=> SuperAgent, super_agent=>super_agent.buses)
+    super_agent:SuperAgent;
 
 }

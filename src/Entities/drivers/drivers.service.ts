@@ -5,47 +5,37 @@ import { Repository } from 'typeorm';
 import { CreateDriver } from './DTO/driversCreation.dto';
 import { UpdateDriver } from './DTO/driversUpdate.dto';
 import { Agency } from '../agencies/agencies.entity';
+import { SuperAgent } from '../super-agent/superAgent.entity';
 
 @Injectable()
 export class DriversService {
 
     constructor(@InjectRepository(Driver) private driverRepository : Repository<Driver>, 
-    @InjectRepository(Agency) private agencyRepository : Repository<Agency>,){}
+    @InjectRepository(Agency) private agencyRepository : Repository<Agency>,
+    @InjectRepository(SuperAgent) private spaRepository : Repository<SuperAgent>){}
 
 
 
     findAll(){
-        return this.driverRepository.find({ relations: ['agency']});
+        return this.driverRepository.find({ relations: ['agency', 'super_agent']});
     }
     
     findOne(id:string){
-        return this.driverRepository.findOne({where: {id}});
+        return this.driverRepository.findOne({where: {id}, relations: ['agency', 'super_agent']});
     }
     
     
 
     async createDriver(agent: CreateDriver): Promise<Driver> {
-
-      /*  agent.dateCreation =   new Date().toISOString();
-        agent.dateUpdate = new Date().toISOString();
-        const newAgent = this.agentRepository.create(agent);
-        newAgent.agency.id = agent.agencyId;
-        return this.agentRepository.save(newAgent);*/
-    
-        const {username,password,firstname,lastname,email,phone,birthDate, picture,address,status, role,genre, agencyId } = agent;
-    
-    
+        const {username,password,firstname,lastname,email,phone,birthDate, picture,address,status, role,genre, agencyId, spaId } = agent;
         const agency = await this.agencyRepository.findOne({ where: { id: agencyId } });
+        const super_agent = await this.spaRepository.findOne({ where: { id: spaId } });
     
         if (!agency) {
           throw new Error('Agency introuvable');
         }
     
-      
-       
-    
-        
-        const newAgent = this.driverRepository.create({username,password,firstname,lastname,email,phone,birthDate, picture,address,status,role, genre, agency});
+        const newAgent = this.driverRepository.create({username,password,firstname,lastname,email,phone,birthDate, picture,address,status,role, genre, agency, super_agent});
     newAgent.dateCreation = new Date().toDateString();
     newAgent.dateUpdate = new Date().toDateString();
         return this.driverRepository.save(newAgent);

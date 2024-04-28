@@ -2,6 +2,7 @@ import { User } from "src/Entities/users/users.entity";
 import { Entity, ManyToOne } from "typeorm";
 import { Agency } from "../agencies/agencies.entity";
 import { Mission } from "../missions/missions.entity";
+import { SuperAgent } from "../super-agent/superAgent.entity";
 
 
 @Entity()
@@ -11,6 +12,8 @@ export class Driver extends User{
     agency: Agency  
     @ManyToOne(() => Mission, mission => mission.drivers)
     mission: Mission;
+    @ManyToOne(()=> SuperAgent, super_agent=>super_agent.drivers)
+    super_agent:SuperAgent;
        
 
 }

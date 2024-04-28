@@ -4,7 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as dotenv from 'dotenv';
-import { AuthentificationGuard } from './Entities/users/guards/authentification.guard';
+import * as session from 'express-session';
 
 
 async function bootstrap() {
@@ -22,6 +22,13 @@ async function bootstrap() {
 const document = SwaggerModule.createDocument(app, config);
 SwaggerModule.setup('api', app, document);
 
+app.use(
+  session({
+    secret: 'my-secret',
+    resave: false,
+    saveUninitialized: true,
+  }),
+);
   await app.listen(3000);
 }
 bootstrap();

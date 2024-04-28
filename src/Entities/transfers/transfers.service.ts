@@ -5,6 +5,8 @@ import { Repository } from 'typeorm';
 import { CreateTranfer } from './DTO/tranfersCreate.dto';
 import { UpdateTransfer } from './DTO/tranfersUpdate.dto';
 import { Agency } from '../agencies/agencies.entity';
+import { SuperAgent } from '../super-agent/superAgent.entity';
+import { Agent } from '../agent/agent.entity';
 
 
 @Injectable()
@@ -12,16 +14,18 @@ export class TransfersService {
 
 
     constructor(@InjectRepository(Transfer) private transferRepository : Repository<Transfer> ,
-     @InjectRepository(Agency) private agencyRepository : Repository<Agency> ){}
+     @InjectRepository(Agency) private agencyRepository : Repository<Agency>,
+     @InjectRepository(Agent) private agentRepository : Repository<Agent>,
+    ){}
  
 
 
     findAll(){
-        return this.transferRepository.find({ relations: ['agency']});
+        return this.transferRepository.find({ relations: ['agency', 'agent']});
     }
     
     findOne(id:string){
-        return this.transferRepository.findOne({where: {id} , relations:['agency']});
+        return this.transferRepository.findOne({where: {id} , relations:['agency', 'agent']});
     }
     
     
@@ -33,7 +37,7 @@ export class TransfersService {
         return await this.transferRepository.save(update);
         }
         
-        
+   
         
         delteTransferr(id:string){
             return this.transferRepository.delete(id);
@@ -43,12 +47,13 @@ export class TransfersService {
 
         async creatTransfert(transfer: CreateTranfer): Promise<Transfer> {
         
-              const {from,to,date_time_Arrive,date_time_Depart,nbrePlacesDisponibles,priceTransferForPerson,etatTransfer, note,extra,dateCreation, dateUpdate,status, agencyId } = transfer;
+              const {from,to,date_time_Arrive,date_time_Depart,nbrePlacesDisponibles,priceTransferForPerson,etatTransfer, note,extra,dateCreation, dateUpdate,status, agencyId, agentId } = transfer;
               const agency = await this.agencyRepository.findOne({ where: { id: agencyId } });
+              const agent = await this.agentRepository.findOne({ where: { id: agentId } });
               if (!agency) {
                 throw new Error('Agency introuvable');
               }
-              const newTransfer = this.transferRepository.create({from,to,date_time_Arrive,date_time_Depart,nbrePlacesDisponibles,priceTransferForPerson,etatTransfer, note,extra,dateCreation, dateUpdate,status, agency});
+              const newTransfer = this.transferRepository.create({from,to,date_time_Arrive,date_time_Depart,nbrePlacesDisponibles,priceTransferForPerson,etatTransfer, note,extra,dateCreation, dateUpdate,status, agency, agent});
               newTransfer.dateCreation = new Date().toDateString();
               newTransfer.dateUpdate = new Date().toDateString();
               return this.transferRepository.save(newTransfer);

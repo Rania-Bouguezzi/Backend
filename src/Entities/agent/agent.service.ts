@@ -5,20 +5,22 @@ import { Repository } from 'typeorm';
 import { CreateAgent } from './DTO/agentCreation.dto';
 import { UpdateAgent } from './DTO/agentUpdate.dto';
 import { Agency } from '../agencies/agencies.entity';
+import { SuperAgent } from '../super-agent/superAgent.entity';
 
 @Injectable()
 export class AgentService {
 
 constructor(@InjectRepository(Agent) private agentRepository: Repository <Agent>,   @InjectRepository(Agency)
-private readonly agencyRepository: Repository<Agency>,){}
+private readonly agencyRepository: Repository<Agency>,
+@InjectRepository(SuperAgent) private spaRepository : Repository<SuperAgent>){}
 
 findAll(){
-    return this.agentRepository.find({ relations: ['agency']});
+    return this.agentRepository.find({ relations: ['agency', 'super_agent']});
 }
 
 
     async findOne(id: string) {
-        return this.agentRepository.findOne({ where: { id }, relations: ['agency'] });
+        return this.agentRepository.findOne({ where: { id }, relations: ['agency', 'super_agent'] });
     }
     
 
@@ -34,31 +36,17 @@ async getAgentByAgency(idAgency:string):Promise <Agent[]>{
 
 
 async creatAgent(agent: CreateAgent): Promise<Agent> {
-
-  /*  agent.dateCreation =   new Date().toISOString();
-    agent.dateUpdate = new Date().toISOString();
-    const newAgent = this.agentRepository.create(agent);
-    newAgent.agency.id = agent.agencyId;
-    return this.agentRepository.save(newAgent);*/
-
-    const {username,password,firstname,lastname,email,phone,birthDate, picture,address,status, role,genre, agencyId } = agent;
-
-
+    const {username,password,firstname,lastname,email,phone,birthDate, picture,address,status, role,genre, agencyId, spaId } = agent;
     const agency = await this.agencyRepository.findOne({ where: { id: agencyId } });
-
+    const super_agent = await this.spaRepository.findOne({ where: { id: spaId } });
     if (!agency) {
       throw new Error('Agency introuvable');
-    }
-
-  
-   
-
+    } 
+    const newAgent = this.agentRepository.create({username,password,firstname,lastname,email,phone,birthDate, picture,address,status,role, genre, agency, super_agent});
+    newAgent.dateCreation = new Date().toDateString();
+    newAgent.dateUpdate = new Date().toDateString();
     
-    const newAgent = this.agentRepository.create({username,password,firstname,lastname,email,phone,birthDate, picture,address,status,role, genre, agency});
-newAgent.dateCreation = new Date().toDateString();
-newAgent.dateUpdate = new Date().toDateString();
     return this.agentRepository.save(newAgent);
-
 }
 
 async updateAgent(id:string ,agent: UpdateAgent): Promise<Agent>{

@@ -7,6 +7,7 @@ import { Customer } from "../customers/customer.entity";
 import { Bus } from "../buses/buses.entity";
 import { Booking } from "../bookings/bookings.entity";
 import { typeStatus } from "src/Type/Type";
+import { NeedTransfer } from "../need-transfer/need-transfer.entity";
 
 @Entity()
 export class Agency{
@@ -33,10 +34,6 @@ dateCreation:string;
 dateUpdate:string;
 @Column({ type: 'enum', enum: typeStatus }) 
 status:typeStatus;
-@Column()
-creatorAgent:string;
-@Column()
-updaterAgent:string;
 @OneToMany(() => Agent, agent => agent.agency)
 agents: Agent[];
 // @ManyToMany(()=> Transfer, transfer => transfer.agencies)
@@ -54,4 +51,6 @@ customers: Driver[];
 buses:Bus[];
 @OneToMany(()=> Booking, booking=> booking.agency)
 bookings:Booking[];
+@OneToMany(()=> NeedTransfer, needTransfer=> needTransfer.agency)
+needTransfers:NeedTransfer[];
 }

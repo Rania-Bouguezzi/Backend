@@ -19,6 +19,9 @@ import { Agent } from '../agent/agent.entity';
 import { AgenciesController } from '../agencies/agencies.controller';
 import { AgenciesService } from '../agencies/agencies.service';
 import { Agency } from '../agencies/agencies.entity';
+import { SuperAgentController } from '../super-agent/super-agent.controller';
+import { SuperAgentService } from '../super-agent/super-agent.service';
+import { SuperAgent } from '../super-agent/superAgent.entity';
 
 
 @Module({
@@ -27,10 +30,11 @@ import { Agency } from '../agencies/agencies.entity';
     TypeOrmModule.forFeature([Customer]),
     TypeOrmModule.forFeature([Driver]),
     TypeOrmModule.forFeature([Agent]),
+    TypeOrmModule.forFeature([SuperAgent]),
     TypeOrmModule.forFeature([Agency]),
 
   ],
-  controllers: [UsersController, CustomersController, AgentController, AgenciesController,DriversController,AuthController],
-  providers: [UsersService, AuthService,CustomersService, AgentService, AgenciesService,DriversService ,JwtService, ConfigService]
+  controllers: [UsersController, CustomersController, AgentController, SuperAgentController,AgenciesController,DriversController,AuthController],
+  providers: [UsersService, AuthService,CustomersService, AgentService, SuperAgentService, AgenciesService,DriversService ,JwtService, ConfigService]
 })
 export class UsersModule {}

@@ -9,6 +9,7 @@ numPermis:string;
 @IsDateString()
 permisExpir:string;
 agencyId:string;
+spaId:string;
 
 
 }

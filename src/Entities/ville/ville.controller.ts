@@ -11,7 +11,7 @@ constructor(private readonly villeService : VilleService){}
 
 @Get()
 finAll(){
-    return this.villeService.finAll();
+    return this.villeService.findAll();
 
 }
 

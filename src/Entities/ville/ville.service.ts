@@ -10,7 +10,7 @@ export class VilleService {
 
 constructor(@InjectRepository(Ville) private villeRepository : Repository<Ville>){}
 
-    finAll()
+    findAll()
     {
         return this.villeRepository.find();
     }

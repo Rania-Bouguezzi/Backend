@@ -18,7 +18,10 @@ dateCreation:string= new Date().toISOString();
 dateUpdate:string =new Date().toISOString();
 @IsIn(Object.values(typeStatus))
 status:typeStatus;
+@IsString()
+picture;
 agencyId:string;
+spaId:string;
 
 
 
