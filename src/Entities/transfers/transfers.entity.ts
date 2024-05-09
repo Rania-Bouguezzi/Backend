@@ -29,6 +29,10 @@ export class Transfer{
     note:string;
     @Column()
     extra:number;
+    @Column({default:false})
+    isShared:boolean;
+    @Column({nullable:true})
+    dateShare:string;
     @Column()
     dateCreation:string;
     @Column()

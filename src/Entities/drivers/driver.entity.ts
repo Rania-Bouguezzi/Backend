@@ -1,5 +1,5 @@
 import { User } from "src/Entities/users/users.entity";
-import { Entity, ManyToOne } from "typeorm";
+import { Column, Entity, ManyToOne } from "typeorm";
 import { Agency } from "../agencies/agencies.entity";
 import { Mission } from "../missions/missions.entity";
 import { SuperAgent } from "../super-agent/superAgent.entity";
@@ -14,6 +14,8 @@ export class Driver extends User{
     mission: Mission;
     @ManyToOne(()=> SuperAgent, super_agent=>super_agent.drivers)
     super_agent:SuperAgent;
+    @Column({nullable:true})
+    busId:string;
        
 
 }

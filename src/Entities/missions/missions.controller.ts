@@ -18,12 +18,17 @@ findById(@Param('id') id : string){
     return this.missionService.findOne(id);
 }
 
-@Post('add')
-createMission(@Body() mission: CreateMission){
-    return this.missionService.createMission(mission);
+@Get('agency/:id')
+findMissionByAgency(@Param('id') id : string){
+    return this.missionService.getMissionByAgency(id);
 }
 
-@Patch('id')
+@Post('add')
+createMission(@Body() mission: CreateMission){
+    return this.missionService.createMissionWithTransfers(mission );
+}
+
+@Patch(':id')
 updateMission(@Param('id') id:string, @Body() mission:UpdateMission)
 { const newMission = this.missionService.findOne(id);
     
@@ -36,11 +41,6 @@ updateMission(@Param('id') id:string, @Body() mission:UpdateMission)
 
 @Delete(':id')
 deleteMission(@Param('id') id : string){
-    const mission = this.missionService.findOne(id)
-    if (!mission) {
-        throw new HttpException('Mission not found ', 404)
-    
-    }
    return this.missionService.delteMission(id)
 }
 

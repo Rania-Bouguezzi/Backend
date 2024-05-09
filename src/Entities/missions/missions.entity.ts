@@ -1,8 +1,10 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Transfer } from "../transfers/transfers.entity";
 import { Bus } from "../buses/buses.entity";
 import { Driver } from "../drivers/driver.entity";
 import { typeStatus } from "src/Type/Type";
+import { Agency } from "../agencies/agencies.entity";
+import { Agent } from "../agent/agent.entity";
 
 
 
@@ -34,12 +36,12 @@ export class Mission{
     @Column()
     dateUpdate:string;
     @OneToMany(() => Transfer, transfer => transfer.mission)
-    transfers: Transfer[];
-  
+    transfers: Transfer[]; 
     @OneToMany(() => Bus, bus => bus.mission)
     buses: Bus[];
-  
     @OneToMany(() => Driver, driver => driver.mission)
     drivers:Driver[];
+    @ManyToOne(() => Agent, agent => agent.missions)
+    agent: Agent 
 
 }

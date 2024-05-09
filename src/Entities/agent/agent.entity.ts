@@ -5,6 +5,7 @@ import { Notification } from "../notifications/notifications.entity";
 import { SuperAgent } from "../super-agent/superAgent.entity";
 import { NeedTransfer } from "../need-transfer/need-transfer.entity";
 import { Transfer } from "../transfers/transfers.entity";
+import { Mission } from "../missions/missions.entity";
 
 @Entity()
 export class Agent extends User {
@@ -22,4 +23,6 @@ super_agent:SuperAgent;
 needTransfers:NeedTransfer[];
 @OneToMany(()=> Transfer, transfer=> transfer.agent)
 transfers:Transfer[];
+@OneToMany(()=> Mission, mission=> mission.agent)
+missions:Transfer[];
 }

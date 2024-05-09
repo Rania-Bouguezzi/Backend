@@ -15,7 +15,7 @@ findAll(){
     return this.agencyRepository.find({ relations: ["agents"] })
 }
 findOne(id : string){
-    return this.agencyRepository.findOne({where: {id}});
+    return this.agencyRepository.findOne({where: {id}, relations:['agents']});
 }
 
 createAgency(agency: CreateAgency){

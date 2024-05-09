@@ -21,11 +21,11 @@ export class TransfersService {
 
 
     findAll(){
-        return this.transferRepository.find({ relations: ['agency', 'agent']});
+        return this.transferRepository.find({ relations: ['agency', 'agent', 'mission']});
     }
     
     findOne(id:string){
-        return this.transferRepository.findOne({where: {id} , relations:['agency', 'agent']});
+        return this.transferRepository.findOne({where: {id} , relations:['agency', 'agent', 'mission']});
     }
     
     
@@ -54,8 +54,8 @@ export class TransfersService {
                 throw new Error('Agency introuvable');
               }
               const newTransfer = this.transferRepository.create({from,to,date_time_Arrive,date_time_Depart,nbrePlacesDisponibles,priceTransferForPerson,etatTransfer, note,extra,dateCreation, dateUpdate,status, agency, agent});
-              newTransfer.dateCreation = new Date().toDateString();
-              newTransfer.dateUpdate = new Date().toDateString();
+              newTransfer.dateCreation =   new Date().toISOString();
+              newTransfer.dateUpdate = new Date().toISOString();
               return this.transferRepository.save(newTransfer);
           }
 
@@ -77,7 +77,14 @@ async getTransferCountByAgency(idAgency: string): Promise<number> {
   }
 
 
-
+  async getSharedTransfer():Promise <Transfer[]>{
+    return  this.transferRepository.find(
+          {
+              where : {isShared:true},
+              relations:['agency', 'agent']
+          }
+      )
+  }
 
 
 

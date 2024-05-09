@@ -18,12 +18,13 @@ import { SuperAgentModule } from './Entities/super-agent/super-agent.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import { VilleService } from './entities/ville/ville.service';
-import { VilleController } from './entities/ville/ville.controller';
 import { VilleModule } from './entities/ville/ville.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import { NeedTransferModule } from './Entities/need-transfer/need-transfer.module';
+import { PusherService } from './pusher/pusher.service';
+import { PusherController } from './pusher/pusher.controller';
+import { MulterModule } from '@nestjs/platform-express';
 
 
 @Module({
@@ -52,11 +53,14 @@ import { NeedTransferModule } from './Entities/need-transfer/need-transfer.modul
     }),
   
     VilleModule, 
+    MulterModule.register({
+      dest: './uploads', // Le dossier où les images seront stockés
+    }),
   
   
   
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, PusherController],
+  providers: [AppService, PusherService],
 })
 export class AppModule {}

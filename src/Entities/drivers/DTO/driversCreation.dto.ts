@@ -10,6 +10,7 @@ numPermis:string;
 permisExpir:string;
 agencyId:string;
 spaId:string;
+busId:string;
 
 
 }

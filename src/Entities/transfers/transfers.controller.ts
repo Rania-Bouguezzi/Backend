@@ -52,6 +52,9 @@ getNumberBus(@Param('id') idAgency:string){
 return this.transferService.getTransferCountByAgency(idAgency)
 }
 
-
+@Get('shared/Transfer')
+getSharedTransfer(){
+return this.transferService.getSharedTransfer()
+}
 
 }

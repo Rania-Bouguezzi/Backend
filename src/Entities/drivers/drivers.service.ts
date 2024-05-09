@@ -6,6 +6,7 @@ import { CreateDriver } from './DTO/driversCreation.dto';
 import { UpdateDriver } from './DTO/driversUpdate.dto';
 import { Agency } from '../agencies/agencies.entity';
 import { SuperAgent } from '../super-agent/superAgent.entity';
+import { UserType } from 'src/Type/Type';
 
 @Injectable()
 export class DriversService {
@@ -38,6 +39,7 @@ export class DriversService {
         const newAgent = this.driverRepository.create({username,password,firstname,lastname,email,phone,birthDate, picture,address,status,role, genre, agency, super_agent});
     newAgent.dateCreation = new Date().toDateString();
     newAgent.dateUpdate = new Date().toDateString();
+    newAgent.role=UserType.DRIVER;
         return this.driverRepository.save(newAgent);
     
     }

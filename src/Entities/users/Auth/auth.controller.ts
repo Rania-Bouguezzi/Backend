@@ -1,5 +1,5 @@
 
-import { BadRequestException, Body, Controller, Get, Logger, Param, Post, Req, Res } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Logger,  Request ,Param, Post, Req, Res } from '@nestjs/common';
 import { CreateUser } from '../DTO/usersCreate.dto';
 import * as bcrypt from 'bcrypt';
 import { AuthService } from './auth.service';
@@ -30,7 +30,6 @@ export class AuthController {
         user.password=hashedPassword;
         return this.authService.createUser(user)
     }
-
 
     @Post('login')
     async login(@Body('email') email: string, @Body('password') password: string) {

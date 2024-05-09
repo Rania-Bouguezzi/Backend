@@ -39,5 +39,9 @@ export class AuthAgentService {
     async  find(condition : any) : Promise<Agent>{
         return this.agentsRepository.findOneBy(condition);
     }
+    async findOne(id: string) {
+        return this.agentsRepository.findOne({ where: { id }, relations: ['agency', 'super_agent'] });
+    }
+    
     
 }

@@ -1,7 +1,8 @@
 import { IsDateString, IsIn, IsNumber, IsString } from "class-validator";
+import { Bus } from "src/Entities/buses/buses.entity";
+import { Driver } from "src/Entities/drivers/driver.entity";
+import { Transfer } from "src/Entities/transfers/transfers.entity";
 import { typeStatus } from "src/Type/Type";
-import { IsNull } from "typeorm";
-
 export class CreateMission {
  
     id:string;
@@ -27,5 +28,9 @@ export class CreateMission {
     dateCreation:string= new Date().toISOString();
     @IsDateString()
     dateUpdate:string=new Date().toISOString();
-
+    transfers: Transfer[]; 
+    agentId:string;
+    buses: Bus[];
+    drivers:Driver[]
+    
 }

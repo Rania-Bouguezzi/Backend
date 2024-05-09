@@ -8,8 +8,18 @@ export class CreateNotification {
     message:string;
     sound:string;
     sending:boolean=false;
+    agentEmetteurId:string;
+    agencyEmettriceId:string;
     agencyEmettriceName:string;
     agencyEmettriceLogo:string;
+    transferId:string;
+    from:string;
+    to:string;
+    nbPlaces:string;
+    notifAccept:boolean;
+    notifRefus:boolean;
+    date_time:string = new Date().toISOString();
+    validate:boolean=false;
     @IsDateString()
     sendingTime:string= new Date().toISOString();
     @IsDateString()

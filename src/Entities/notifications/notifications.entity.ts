@@ -17,9 +17,29 @@ export class Notification{
     @Column({ default: false })
     sending:boolean;
     @Column()
+    agentEmetteurId:string;
+    @Column()
+    agencyEmettriceId:string;
+    @Column()
     agencyEmettriceName:string;
     @Column()
     agencyEmettriceLogo:string;
+    @Column({nullable: true})
+    notifAccept:boolean;
+    @Column({nullable: true})
+    notifRefus:boolean;
+    @Column({nullable: true})
+    transferId:string;
+    @Column({default:false})
+    validate:boolean;
+    @Column({nullable: true})
+    from:string;
+    @Column({nullable: true})
+    to:string;
+    @Column({nullable: true})
+    nbPlaces:string;
+    @Column({nullable: true})
+    date_time:string;
     @Column()
     sendingTime:string;
     @Column()

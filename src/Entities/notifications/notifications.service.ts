@@ -25,7 +25,7 @@ export class NotificationsService {
     }
     
     findOne(id:string){
-        return this.notificationRepository.findOne({where: {id},relations:['agent']},);
+        return this.notificationRepository.findOne({where: {id},relations:['agent', 'agent.agency']},);
     }
     
     nbNotif(){
@@ -34,14 +34,14 @@ export class NotificationsService {
     
     async creatNotif(notif: CreateNotification): Promise<Notification> {
         
-        const {message,  agentId, agencyEmettriceLogo, agencyEmettriceName } = notif;
+        const {message,  agentId, agencyEmettriceId,agencyEmettriceLogo, agencyEmettriceName ,agentEmetteurId, from , to , nbPlaces, date_time,  notifAccept,notifRefus, transferId} = notif;
         const agent = await this.agentRepository.findOne({ where: { id: agentId } });
         if (!agent) {
           throw new Error('Agent introuvable');
         }
-        const newNotif = this.notificationRepository.create({message, agent,agencyEmettriceLogo, agencyEmettriceName});
-        newNotif.dateCreation = new Date().toDateString();
-        newNotif.dateUpdate = new Date().toDateString();
+        const newNotif = this.notificationRepository.create({message, agent,agencyEmettriceId,agencyEmettriceLogo, agencyEmettriceName,agentEmetteurId, from , to , nbPlaces, date_time, notifAccept, notifRefus,transferId});
+        newNotif.dateCreation = new Date().toISOString();
+        newNotif.dateUpdate = new Date().toISOString();
         newNotif.status = typeStatus.ACTIVE;
         newNotif.sendingTime =  new Date().toDateString();
         return this.notificationRepository.save(newNotif);
@@ -69,7 +69,7 @@ export class NotificationsService {
                         agent: {
                           agency: { id: idAgency }
                         }
-                      }
+                      },relations:['agent', 'agent.agency']
                   }
               )
           }

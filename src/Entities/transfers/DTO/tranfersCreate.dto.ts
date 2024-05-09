@@ -27,6 +27,9 @@ etatTransfer:string;
 note:string;
 @IsNumber()
 extra:number;
+isShared:boolean=false;
+@IsDateString()
+dateShare:string= new Date().toISOString();
 @IsDateString()
 dateCreation:string= new Date().toISOString();
 @IsDateString()
