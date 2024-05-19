@@ -1,5 +1,5 @@
 import { IsDateString, IsIn, IsNumber, IsString } from "class-validator";
-import { etatTransfer, typeStatus } from "src/Type/Type";
+import { EtatTransfer, typeStatus } from "src/Type/Type";
 import { IntegerType } from "typeorm";
 
 
@@ -17,12 +17,14 @@ to:string;
 date_time_Depart:string;
 @IsDateString()
 date_time_Arrive:string;
-@IsNumber()
+//@IsNumber()
 nbrePlacesDisponibles:number;
 @IsNumber()
+nbrePlacesOccupees:number;
+@IsNumber()
 priceTransferForPerson:number;
-@IsIn(Object.values(etatTransfer))
-etatTransfer:string;
+//@IsIn(Object.values(EtatTransfer))
+etatTransfer:EtatTransfer;
 @IsString()
 note:string;
 @IsNumber()
@@ -34,7 +36,7 @@ dateShare:string= new Date().toISOString();
 dateCreation:string= new Date().toISOString();
 @IsDateString()
 dateUpdate:string= new Date().toISOString();
-@IsIn(Object.values(typeStatus))
+//@IsIn(Object.values(typeStatus))
 status:typeStatus;
 agentId:string;
 agencyId:string;

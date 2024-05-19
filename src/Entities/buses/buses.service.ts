@@ -15,7 +15,7 @@ constructor(@InjectRepository(Bus) private busRepository : Repository<Bus>,
 @InjectRepository(SuperAgent) private spaRepository : Repository<SuperAgent>){}
 
 findAll(){
-    return this.busRepository.find({ relations: ['agency' , 'super_agent']});
+    return this.busRepository.find({ relations: ['agency' , 'super_agent']}); 
 }
 
 findOne(id:string){
@@ -26,13 +26,13 @@ findOne(id:string){
 async createBus(bus : CreateBus){
 
 
-    const {marque,puissance,nbrePlaces,dateCreation, dateUpdate,status, agencyId, spaId } = bus;
+    const {marque,puissance,matricule,nbrePlaces,dateCreation, dateUpdate,status, agencyId, spaId } = bus;
     const agency = await this.agencyRepository.findOne({ where: { id: agencyId } });
     const super_agent = await this.spaRepository.findOne({ where: { id: spaId } });
     if (!agency) {
       throw new Error('Agency introuvable');
     }
-    const newBus = this.busRepository.create({marque,puissance,nbrePlaces,dateCreation, dateUpdate,status, agency, super_agent});
+    const newBus = this.busRepository.create({marque,puissance,matricule,nbrePlaces,dateCreation, dateUpdate,status, agency, super_agent});
     newBus.dateCreation = new Date().toDateString();
     newBus.dateUpdate = new Date().toDateString();
     return this.busRepository.save(newBus);

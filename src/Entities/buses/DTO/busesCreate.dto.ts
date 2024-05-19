@@ -10,6 +10,8 @@ id:string;
 marque:string
 @IsNumber()
 puissance:number
+@IsString()
+matricule:string;
 @IsNumber()
 nbrePlaces:number
 @IsDateString()

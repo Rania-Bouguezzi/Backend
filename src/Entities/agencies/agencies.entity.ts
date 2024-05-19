@@ -42,7 +42,7 @@ agents: Agent[];
 @OneToMany(() => Transfer, transfer => transfer.agency)
 transfers: Transfer[];
 @OneToOne(() => SuperAgent, superAgent => superAgent.agency)
-superAgent: SuperAgent;
+superAgents: SuperAgent;
 @OneToMany(() => Driver, driver => driver.agency)
 drivers: Driver[];
 @OneToMany(() => Customer, customer => customer.agency)

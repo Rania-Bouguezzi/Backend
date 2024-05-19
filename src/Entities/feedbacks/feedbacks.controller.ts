@@ -9,17 +9,23 @@ import { ApiTags } from '@nestjs/swagger';
 export class FeedbacksController {
 constructor(private readonly feedbackService : FeedbacksService){}
 
+
+
+@Get()
+getAll(){
+    return this.feedbackService.findAll();
+}
     @Get(':id')
 findById(@Param('id') id : string){
     return this.feedbackService.findOne(id);
 }
 
 @Post('add')
-createFeedbck(@Body() feedback: CreateFeedback){
-    return this.feedbackService.createFeedback(feedback);
+createFeedbck(@Body() feedback: CreateFeedback, missionId : string){
+    return this.feedbackService.createFeedback(feedback, missionId);
 }
 
-@Patch('id')
+@Patch(':id')
 updateFeedback(@Param('id') id:string, @Body() feedback:UpdateFeedback)
 { const newFeed = this.feedbackService.findOne(id);
     
@@ -39,6 +45,17 @@ deleteFeedback(@Param('id') id : string){
     }
    return this.feedbackService.delteFeedback(id)
 }
+
+@Get('mission/:id')
+findFeedbackByAgency(@Param('id') id : string){
+    return this.feedbackService.findByMission(id);
+}
+
+@Get('count/agency/:id')
+countFeedback(@Param('id') id : string){
+    return this.feedbackService.countFeedbacks(id);
+}
+
 
 
 

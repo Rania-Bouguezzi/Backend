@@ -27,7 +27,12 @@ export enum GenreType{
     MASCULIN = "Masculin"
 }
 
-export enum etatTransfer{
+export enum EtatTransfer{
+    DISPO = "Available",
+    NOTDISPO = "Not Available"
+}
+
+export enum EtatMission{
     DISPO = "Available",
     NOTDISPO = "Not Available"
 }

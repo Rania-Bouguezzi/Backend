@@ -84,8 +84,6 @@ dateCreation:string;
 dateUpdate:string;
 @Column({ type: 'enum', enum: typeStatus }) 
 status:typeStatus;
-@OneToMany(()=> Feedback, feedback=>feedback.user)
-feedbacks: Feedback[];
 @OneToOne(() => Reaction)
 @JoinColumn()
 reaction: Reaction;

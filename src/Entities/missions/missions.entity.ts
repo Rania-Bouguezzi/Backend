@@ -2,9 +2,9 @@ import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "ty
 import { Transfer } from "../transfers/transfers.entity";
 import { Bus } from "../buses/buses.entity";
 import { Driver } from "../drivers/driver.entity";
-import { typeStatus } from "src/Type/Type";
-import { Agency } from "../agencies/agencies.entity";
+import { EtatMission, typeStatus } from "src/Type/Type";
 import { Agent } from "../agent/agent.entity";
+import { Feedback } from "../feedbacks/feedbacks.entity";
 
 
 
@@ -37,11 +37,22 @@ export class Mission{
     dateUpdate:string;
     @OneToMany(() => Transfer, transfer => transfer.mission)
     transfers: Transfer[]; 
-    @OneToMany(() => Bus, bus => bus.mission)
-    buses: Bus[];
-    @OneToMany(() => Driver, driver => driver.mission)
-    drivers:Driver[];
+    @ManyToOne(()=> Driver, driver=>driver.missions)
+    driver:Driver;
+    @ManyToOne(()=> Bus, bus=>bus.missions)
+    bus:Bus;
     @ManyToOne(() => Agent, agent => agent.missions)
-    agent: Agent 
+    agent: Agent ;
+    @Column({default:false})
+    isShared:boolean;
+    @Column({nullable:true})
+    dateShare:string;
+    @Column({ type: 'enum', enum: EtatMission })
+    etatMission:EtatMission;
+    @OneToMany(()=> Feedback, feedback=> feedback.mission)
+     feedbacks: Feedback[];
+
+
+
 
 }

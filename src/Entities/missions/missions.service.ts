@@ -8,6 +8,8 @@ import { Transfer } from '../transfers/transfers.entity';
 import { Agent } from '../agent/agent.entity';
 import { Bus } from '../buses/buses.entity';
 import { Driver } from '../drivers/driver.entity';
+import { EtatMission, typeStatus } from 'src/Type/Type';
+
 
 @Injectable()
 export class MissionsService {
@@ -24,11 +26,11 @@ export class MissionsService {
 
 
     findAll(){
-        return this.missionrepository.find({relations:['transfers', 'agent', 'agent.agency', 'buses', 'drivers']});
+        return this.missionrepository.find({relations:['transfers', 'agent', 'agent.agency', 'bus', 'driver']});
     }
     
     findOne(id:string){
-        return this.missionrepository.findOne({where: {id}, relations:['agent','transfers', 'buses', 'drivers']});
+        return this.missionrepository.findOne({where: {id}, relations:['agent','transfers', 'agent.agency']});
     }
     
     
@@ -50,10 +52,9 @@ export class MissionsService {
         
         
         async  delteMission(id:string){
-            const mission = await this.missionrepository.findOneOrFail( {where : {id}, relations: ['transfers', 'buses' , 'drivers'] });
+            const mission = await this.missionrepository.findOneOrFail( {where : {id}, relations: ['transfers', 'bus' , 'driver'] });
             const transferIds = mission.transfers.map(transfer => transfer.id);
-            const busIds = mission.buses.map(bus => bus.id);
-            const driverIds = mission.drivers.map(driver => driver.id);
+          
 
             // Détacher les transferts de la mission en mettant à jour leurs relations
             await this.missionrepository.manager
@@ -61,18 +62,9 @@ export class MissionsService {
               .relation(Mission, 'transfers')
               .of(mission)
               .remove(transferIds);
-              await this.missionrepository.manager
-              .createQueryBuilder()
-              .relation(Mission, 'buses')
-              .of(mission)
-              .remove(busIds);
-              await this.missionrepository.manager
-              .createQueryBuilder()
-              .relation(Mission, 'drivers')
-              .of(mission)
-              .remove(driverIds);
+             
         
-            // Enfin, supprimer la mission elle-même
+           
             await this.missionrepository.remove(mission);
         
             return { success: true, message: 'Mission deleted successfully.' };
@@ -83,38 +75,43 @@ export class MissionsService {
 
         async createMissionWithTransfers(missionData: CreateMission) {
           
-            const {name,from,to,date_time_start,date_time_end,nbrPassengers,totalPrice,status, dateMission,dateCreation,dateUpdate, transfers,agentId, buses, drivers } = missionData;
+            const {name,from,to,date_time_start,date_time_end,nbrPassengers,totalPrice, dateMission,dateCreation,dateUpdate, transfers,agentId,busId, driverId } = missionData;
             const agent = await this.agentRepository.findOne({ where: { id: agentId } });
-            const mission = await this.missionrepository.create( {name,from,to,date_time_start,date_time_end,nbrPassengers,totalPrice,status, dateMission,dateCreation,dateUpdate, transfers,agent, buses});
+            const bus = await this.busRepository.findOne({ where: { id: busId } });
+            const driver = await this.driverRepository.findOne({ where: { id: driverId } });
+            const mission = await this.missionrepository.create( {name,from,to,date_time_start,date_time_end,nbrPassengers,totalPrice, dateMission,dateCreation,dateUpdate, transfers,agent, bus,driver ,});
             mission.dateCreation = new Date().toISOString();
             mission.dateUpdate= new Date().toISOString();
+            mission.etatMission= EtatMission.DISPO;
+            mission.status= typeStatus.ACTIVE;
+           
             if (transfers && transfers.length > 0) {
               const transfersEntities = await this.transferrepository.findByIds(transfers);
               mission.transfers = transfersEntities;
               await this.missionrepository.save(mission);
             }
-            if (buses && buses.length > 0) {
-              const busessEntities = await this.busRepository.findByIds(buses);
-              mission.buses = busessEntities;
-              await this.missionrepository.save(mission);
-            }
-            if (drivers && drivers.length > 0) {
-              const driverssEntities = await this.driverRepository.findByIds(drivers);
-              mission.drivers = driverssEntities;
-              await this.missionrepository.save(mission);
-            }
-        
+          
             return mission;
           }
 
 
           async getMissionByAgency(idAgency: string): Promise<Mission[]> {
             return this.missionrepository.find({
-                where: {
+                where: { isShared : true,
                     agent: {
                       agency: { id: idAgency }
                     }
-                  },relations:['agent', 'agent.agency', 'transfers', 'buses' , 'drivers']
+                  },relations:['agent', 'agent.agency', 'transfers', ]
               });}
+
+
+               async getSharedMission():Promise <Mission[]>{
+                return  this.missionrepository.find(
+                      {
+                          where : {isShared:true},
+                          relations:['agent', 'agent.agency', 'transfers', ]
+                      }
+                  )
+              }
 
 }

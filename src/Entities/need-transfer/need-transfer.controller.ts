@@ -50,7 +50,7 @@ constructor(private readonly needService : NeedTransferService ){}
     }
     
     @Get('agency/:id')
-    getBusByAgency(@Param('id') idAgency:string){
+    getNeedTransfer(@Param('id') idAgency:string){
     return this.needService.getNeedTransferByAgency(idAgency)
     }
     

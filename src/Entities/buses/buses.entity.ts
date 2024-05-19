@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Agency } from "../agencies/agencies.entity";
 import { Mission } from "../missions/missions.entity";
 import { typeStatus } from "src/Type/Type";
@@ -12,7 +12,9 @@ export class Bus{
     @Column()
     marque:string;
     @Column()
-    puissance:number
+    puissance:number;
+    @Column({nullable:true})
+    matricule:string;
     @Column({nullable:true})
     picture:string;
     @Column()
@@ -25,8 +27,8 @@ export class Bus{
     status:typeStatus;
     @ManyToOne(()=> Agency, agency=>agency.buses)
     agency:Agency;
-    @ManyToOne(() => Mission, mission => mission.buses)
-    mission: Mission;
+    @OneToMany(()=> Mission, mission=> mission.bus)
+    missions:Mission[];
     @ManyToOne(()=> SuperAgent, super_agent=>super_agent.buses)
     super_agent:SuperAgent;
 

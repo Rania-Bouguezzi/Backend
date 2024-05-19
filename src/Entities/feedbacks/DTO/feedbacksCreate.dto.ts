@@ -7,10 +7,14 @@ id:string;
 @IsString()
 text:string;
 @IsDateString()
-dateCreation:string;
+dateCreation:string= new Date().toISOString();
 @IsDateString()
-dateUpdate:string;
-@IsIn(Object.values(typeStatus))
+dateUpdate:string = new Date().toISOString();
+// @IsIn(Object.values(typeStatus))
 status:typeStatus;
+agentId:string;
+missionId:string;
+
+
 
 }

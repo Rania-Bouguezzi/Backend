@@ -12,7 +12,7 @@ import { Agent } from '../agent/agent.entity';
 
 @Module({
   imports:[
-    TypeOrmModule.forFeature([Transfer, Agency,  Mission, Agent]),
+    TypeOrmModule.forFeature([Transfer, Agency, Agent]),
     AgenciesModule, MissionsModule
   ],
   controllers: [TransfersController],

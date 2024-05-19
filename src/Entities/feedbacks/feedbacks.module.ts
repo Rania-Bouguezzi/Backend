@@ -3,13 +3,15 @@ import { FeedbacksController } from './feedbacks.controller';
 import { FeedbacksService } from './feedbacks.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Feedback } from './feedbacks.entity';
-import { User } from '../users/users.entity';
-import { UsersModule } from '../users/users.module';
+import { Agent } from '../agent/agent.entity';
+import { AgentModule } from '../agent/agent.module';
+import { Mission } from '../missions/missions.entity';
+import { MissionsModule } from '../missions/missions.module';
 
 @Module({
   imports:[
-    TypeOrmModule.forFeature([Feedback, User]),
-    UsersModule
+    TypeOrmModule.forFeature([Feedback, Agent, Mission]),
+    AgentModule, MissionsModule
   ],
   controllers: [FeedbacksController],
   providers: [FeedbacksService]

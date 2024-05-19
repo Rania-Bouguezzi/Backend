@@ -1,8 +1,6 @@
 import { IsDateString, IsIn, IsNumber, IsString } from "class-validator";
-import { Bus } from "src/Entities/buses/buses.entity";
-import { Driver } from "src/Entities/drivers/driver.entity";
 import { Transfer } from "src/Entities/transfers/transfers.entity";
-import { typeStatus } from "src/Type/Type";
+import { EtatMission, typeStatus } from "src/Type/Type";
 export class CreateMission {
  
     id:string;
@@ -20,7 +18,7 @@ export class CreateMission {
     nbrPassengers:number;
     @IsNumber()
     totalPrice:number;
-    @IsIn(Object.values(typeStatus))
+   // @IsIn(Object.values(typeStatus))
     status:typeStatus;
     @IsDateString()
     dateMission:string;
@@ -30,7 +28,11 @@ export class CreateMission {
     dateUpdate:string=new Date().toISOString();
     transfers: Transfer[]; 
     agentId:string;
-    buses: Bus[];
-    drivers:Driver[]
+    busId:string;
+    driverId:string;
+    isShared:boolean=false;
+    @IsDateString()
+    dateShare:string= new Date().toISOString();
+    etatMission:EtatMission;
     
 }

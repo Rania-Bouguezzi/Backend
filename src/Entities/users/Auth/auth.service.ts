@@ -64,6 +64,17 @@ async getById(id:string)  {
   return userById; 
 }
 
+ async deleteUser(id:string){
+    const customers = await this.customersRepository.find({where: {id },relations:['agency']});
+    const drivers = await this.driversRepository.find({where: {id },relations:['agency']});
+    const agents = await this.agentsRepository.find({where: {id },relations:['agency']});
+    const superAgent = await this.superagentRepository.find({where: {id },relations:['agency']});
+    const allEntities = [...customers, ...drivers, ...agents, ...superAgent];
+    const userById = allEntities.find(entity => entity.id === id);
+  
+  
+}
+
     }
     
 

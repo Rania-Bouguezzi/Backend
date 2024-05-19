@@ -7,6 +7,7 @@ import { UpdateTransfer } from './DTO/tranfersUpdate.dto';
 import { Agency } from '../agencies/agencies.entity';
 import { SuperAgent } from '../super-agent/superAgent.entity';
 import { Agent } from '../agent/agent.entity';
+import { EtatTransfer, typeStatus } from 'src/Type/Type';
 
 
 @Injectable()
@@ -47,15 +48,17 @@ export class TransfersService {
 
         async creatTransfert(transfer: CreateTranfer): Promise<Transfer> {
         
-              const {from,to,date_time_Arrive,date_time_Depart,nbrePlacesDisponibles,priceTransferForPerson,etatTransfer, note,extra,dateCreation, dateUpdate,status, agencyId, agentId } = transfer;
+              const {from,to,date_time_Arrive,date_time_Depart,nbrePlacesDisponibles,priceTransferForPerson, note,extra,dateCreation, dateUpdate, nbrePlacesOccupees,agencyId, agentId } = transfer;
               const agency = await this.agencyRepository.findOne({ where: { id: agencyId } });
               const agent = await this.agentRepository.findOne({ where: { id: agentId } });
               if (!agency) {
                 throw new Error('Agency introuvable');
               }
-              const newTransfer = this.transferRepository.create({from,to,date_time_Arrive,date_time_Depart,nbrePlacesDisponibles,priceTransferForPerson,etatTransfer, note,extra,dateCreation, dateUpdate,status, agency, agent});
+              const newTransfer = this.transferRepository.create({from,to,date_time_Arrive,date_time_Depart,nbrePlacesDisponibles,priceTransferForPerson, note,extra,  nbrePlacesOccupees,dateCreation, dateUpdate, agency, agent});
               newTransfer.dateCreation =   new Date().toISOString();
               newTransfer.dateUpdate = new Date().toISOString();
+              newTransfer.status = typeStatus.ACTIVE;
+              newTransfer.etatTransfer= EtatTransfer.DISPO;
               return this.transferRepository.save(newTransfer);
           }
 

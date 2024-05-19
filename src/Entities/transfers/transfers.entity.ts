@@ -2,7 +2,7 @@ import { Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColum
 import { Agency } from "../agencies/agencies.entity";
 import { Booking } from "../bookings/bookings.entity";
 import { Mission } from "../missions/missions.entity";
-import { typeStatus } from "src/Type/Type";
+import { EtatTransfer, typeStatus } from "src/Type/Type";
 import { SuperAgent } from "../super-agent/superAgent.entity";
 import { Agent } from "../agent/agent.entity";
 
@@ -19,12 +19,14 @@ export class Transfer{
     date_time_Depart:string;
     @Column()
     date_time_Arrive:string;
-    @Column()
+    @Column({default:0})
     nbrePlacesDisponibles:number;
     @Column()
-    priceTransferForPerson:number;
+    nbrePlacesOccupees:number;
     @Column()
-    etatTransfer:string;
+    priceTransferForPerson:number;
+    @Column({ type: 'enum', enum: EtatTransfer})
+    etatTransfer:EtatTransfer;
     @Column()
     note:string;
     @Column()

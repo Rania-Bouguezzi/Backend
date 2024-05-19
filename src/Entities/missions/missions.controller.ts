@@ -45,7 +45,10 @@ deleteMission(@Param('id') id : string){
 }
 
 
-
+@Get('shared/Mission')
+getSharedMission(){
+return this.missionService.getSharedMission()
+}
 
 
 

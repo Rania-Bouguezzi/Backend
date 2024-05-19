@@ -1,6 +1,9 @@
 import { typeStatus } from "src/Type/Type";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { User } from "../users/users.entity";
+import { Agent } from "../agent/agent.entity";
+import { Mission } from "../missions/missions.entity";
+
+
 
 @Entity()
 export class Feedback {
@@ -15,8 +18,10 @@ export class Feedback {
     dateUpdate:string;
     @Column({ type: 'enum', enum: typeStatus }) 
     status:typeStatus;
-    @ManyToOne(()=>User, user=>user.feedbacks)
-    user:User;
+    @ManyToOne(()=> Agent, agent=> agent.feedbacks)
+    agent:Agent;
+    @ManyToOne(()=> Mission, mission=> mission.feedbacks)
+    mission:Mission;
     
 
 

@@ -26,12 +26,12 @@ export class SuperAgentService {
     
     
  async   createSpA(spa : SuperAgentCreate) : Promise<SuperAgent>{
-    const {username,password,firstname,lastname,email,phone,birthDate, picture,address,status, role,genre, agencyId } = spa;
+    const {username,password,firstname,lastname,email,phone,birthDate, picture,address,genre, agencyId } = spa;
     const agency = await this.agencyRepository.findOne({ where: { id: agencyId } });
     if (!agency) {
       throw new Error('Agency introuvable');
     } 
-    const newAgent = this.superagentRepository.create({username,password,firstname,lastname,email,phone,birthDate, picture,address,status,role, genre, agency});
+    const newAgent = this.superagentRepository.create({username,password,firstname,lastname,email,phone,birthDate, picture,address, genre, agency});
     newAgent.dateCreation = new Date().toDateString();
     newAgent.dateUpdate = new Date().toDateString();
     newAgent.role= UserType.SUPERAGENT;
