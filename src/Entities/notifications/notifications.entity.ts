@@ -28,6 +28,8 @@ export class Notification{
     notifAccept:boolean;
     @Column({nullable: true})
     notifRefus:boolean;
+    @Column({default:'Waiting'})
+    response:string;
     @Column({nullable: true})
     transferId:string;
     @Column({default:false})

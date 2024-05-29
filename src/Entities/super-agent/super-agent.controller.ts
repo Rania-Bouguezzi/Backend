@@ -51,6 +51,10 @@ deleteSPA(@Param('id') id : string){
    return this.superAgentService.delteSpa(id)
 }
 
+@Get('agency/:id')
+getSpaByAgency(@Param('id') id : string){
+  return this.superAgentService.findSpaByAgency(id);
 
+}
 
 }

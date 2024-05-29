@@ -75,7 +75,19 @@ export class NotificationsService {
           }
 
 
-
+async getNotifOfTransfer(idAgency:string,idTransfer:string):Promise<Notification[]>{
+    return  this.notificationRepository.find(
+        {
+          where: {
+              agent: {
+                agency: { id: idAgency }
+              },
+              transferId: idTransfer
+            },
+            
+        }
+    )
+}
 
 
 

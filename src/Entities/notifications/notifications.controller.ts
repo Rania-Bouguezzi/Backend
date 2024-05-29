@@ -47,4 +47,9 @@ getNotifByAgency(@Param('id') idAgency:string){
 return this.notifService.getNotificationByAgency(idAgency)
 }
 
+@Get(':id/transfer/:idTra')
+getNotifByTransfer(@Param('id') idAgency:string, @Param('idTra') idTransfer:string){
+return this.notifService.getNotifOfTransfer(idAgency, idTransfer)
+}
+
 }

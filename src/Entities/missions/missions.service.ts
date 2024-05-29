@@ -97,7 +97,7 @@ export class MissionsService {
 
           async getMissionByAgency(idAgency: string): Promise<Mission[]> {
             return this.missionrepository.find({
-                where: { isShared : true,
+                where: { 
                     agent: {
                       agency: { id: idAgency }
                     }

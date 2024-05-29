@@ -55,8 +55,13 @@ async  find(condition : any) : Promise<SuperAgent>{
         }
         
 
-
-
+findSpaByAgency(id:string):Promise <SuperAgent[]>{
+    return  this.superagentRepository.find(
+          {
+              where : {agency:{id :id}}
+          }
+      )
+  }
 
 
 

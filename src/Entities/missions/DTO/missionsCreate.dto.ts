@@ -34,5 +34,5 @@ export class CreateMission {
     @IsDateString()
     dateShare:string= new Date().toISOString();
     etatMission:EtatMission;
-    
+    response:string
 }

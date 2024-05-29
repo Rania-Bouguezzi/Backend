@@ -9,6 +9,8 @@ import { Customer } from 'src/Entities/customers/customer.entity';
 import { Driver } from 'src/Entities/drivers/driver.entity';
 import { Agent } from 'src/Entities/agent/agent.entity';
 import { SuperAgent } from 'src/Entities/super-agent/superAgent.entity';
+import { typeStatus } from 'src/Type/Type';
+import { Agency } from 'src/Entities/agencies/agencies.entity';
 
 @Injectable()
 export class AuthService {
@@ -18,11 +20,15 @@ export class AuthService {
         @InjectRepository(Driver) private driversRepository: Repository<Driver>,
         @InjectRepository(Agent) private agentsRepository: Repository<Agent>,
         @InjectRepository(SuperAgent) private superagentRepository: Repository<SuperAgent>,
+        @InjectRepository(Agency) private agencyRepository: Repository<Agency>,
         
     ){}
 
     createUser(user: CreateUser){
-        const newUser = this.usersRepository.create(user)
+        const newUser = this.usersRepository.create(user);
+        newUser.dateCreation = new Date().toDateString();
+        newUser.dateUpdate = new Date().toDateString();
+        newUser.status = typeStatus.ACTIVE;
         return this.usersRepository.save(newUser)
     }
 
@@ -51,7 +57,7 @@ export class AuthService {
         return allEntities;
     }
 async getById(id:string)  {
-   // const users = await this.usersRepository.find( {where: {id }});
+   
     const customers = await this.customersRepository.find({where: {id },relations:['agency']});
     const drivers = await this.driversRepository.find({where: {id },relations:['agency']});
     const agents = await this.agentsRepository.find({where: {id },relations:['agency']});
@@ -64,6 +70,17 @@ async getById(id:string)  {
   return userById; 
 }
 
+
+async getAdmin(condition: any){
+    const admin = await this.usersRepository.find({ where: condition });
+    return admin;
+}
+
+async getAdminById(id:string){
+    const admin = await this.usersRepository.findOne({ where: { id } });
+    return admin;    
+}
+
  async deleteUser(id:string){
     const customers = await this.customersRepository.find({where: {id },relations:['agency']});
     const drivers = await this.driversRepository.find({where: {id },relations:['agency']});
@@ -74,6 +91,7 @@ async getById(id:string)  {
   
   
 }
+
 
     }
     

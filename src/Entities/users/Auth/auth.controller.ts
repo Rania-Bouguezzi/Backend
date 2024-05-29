@@ -34,6 +34,7 @@ export class AuthController {
     @Post('login')
     async login(@Body('email') email: string, @Body('password') password: string) {
         const users = await this.authService.getAllEntities({ email });
+        const admin = await this.authService.getAdmin({email});
         if (!users || users.length === 0) {
             throw new BadRequestException('User does not exist');
         }
@@ -73,6 +74,13 @@ export class AuthController {
                 };
             }
           
+        }  else if(user.role === 'SuperAdmin')
+            {
+           const admin = await this.authService.getAdminById(user.id);
+           if(admin){
+            payload;
+          
+           }
         }
         this.tokenData = payload;
 
@@ -113,7 +121,7 @@ export class AuthController {
             return res.status(401).send({ error: 'Unauthorized' });
         }}
 
-    @Get('allUsers')
+    @Get('/allUsers')
     getAllUsers(){
         return this.authService.getAllUsers();
         
@@ -122,6 +130,12 @@ export class AuthController {
     @Get(':id')
     getById(@Param('id') id:string){
         return this.authService.getById(id);
+        
+
+    }
+    @Get('admin/:id')
+    getAdminById(@Param('id') id:string){
+        return this.authService.getAdminById(id);
         
 
     }
