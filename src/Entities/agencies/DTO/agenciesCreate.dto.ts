@@ -13,20 +13,20 @@ name:string;
 @IsString()
 logo:string;
 @IsEmail()
-email:string;
+emailAgency:string;
 @IsString()
 website:string;
 @IsString()
-phone:string;
+phoneAgency:string;
 @IsString()
-address:string;
-@IsString()
+addressAgency:string;
+//@IsString()
 type:string
 @IsDateString()
 dateCreation:string = new Date().toISOString();
 @IsDateString()
 dateUpdate:string = new Date().toISOString();
-@IsIn(Object.values(typeStatus))
+//@IsIn(Object.values(typeStatus))
 status:typeStatus;
 
 

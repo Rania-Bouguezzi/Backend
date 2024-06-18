@@ -4,45 +4,32 @@ import { GenreType, UserType, typeStatus } from "src/Type/Type";
 export class CreateUser {
     id: string;
 
-    @IsString()
+   // @IsString()
     username: string;
-
     @IsString()
     password: string;
-
     @IsString()
     firstname: string;
-
     @IsString()
     lastname: string;
-
     @IsEmail()
     email: string;
-
     @IsString()
     phone: string;
-
     @IsDateString() // (YYYY-MM-DD)
     birthDate: string;
-
 //    @IsString()
     picture?: string;
-
     @IsString()
     address: string;
-
    // @IsIn(Object.values(UserType))
     role: UserType;
-
     @IsIn(Object.values(GenreType))
     genre: string;
-
    // @IsString()
     facebookKey?: string;
-
   //  @IsString()
     profile?: string;
-
    // @IsBoolean()
     enableOauth?: boolean = true;
 

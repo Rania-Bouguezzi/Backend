@@ -3,7 +3,8 @@ import { AgenciesService } from './agencies.service';
 import { CreateAgency } from './DTO/agenciesCreate.dto';
 import { UpdateAgency } from './DTO/agenciesUpdate.dto';
 import { ApiTags } from '@nestjs/swagger';
-
+import { SuperAgentCreate } from '../super-agent/DTO/superAgentCreate.dto';
+import * as bcrypt from 'bcrypt';
 @Controller('agencies')
 @ApiTags('Agency')
 export class AgenciesController {
@@ -54,5 +55,21 @@ deleteAgency(@Param('id') id : string){
     }
    return this.agencyService.delete(id)
 }
+
+@Post('createAgencyWithSuperAgent')
+async createAgencyWithSuperAgent(
+  @Body() createAgencyDto: CreateAgency,
+  @Body() superAgentCreateDto: SuperAgentCreate
+) {
+  const hashedPassword =  await bcrypt.hash(superAgentCreateDto.password, 12);
+  console.log(hashedPassword);
+  superAgentCreateDto.password=hashedPassword;
+  return this.agencyService.createAgencyWithSuperAgent(createAgencyDto, superAgentCreateDto);
+}
+
+
+
+
+
 
 }

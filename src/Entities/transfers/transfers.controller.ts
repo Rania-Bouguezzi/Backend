@@ -4,6 +4,7 @@ import { CreateTranfer } from './DTO/tranfersCreate.dto';
 import { UpdateTransfer } from './DTO/tranfersUpdate.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthController } from '../users/auth/auth.controller';
+import { UpdateMission } from '../missions/DTO/missionsUpdate.dto';
 
 @Controller('transfers')
 @ApiTags('Transfer')
@@ -56,5 +57,19 @@ return this.transferService.getTransferCountByAgency(idAgency)
 getSharedTransfer(){
 return this.transferService.getSharedTransfer()
 }
+
+@Get('mission/:id')
+getMission(@Param('id') idTransfer:string){
+return this.transferService.getMission(idTransfer);
+}
+
+
+@Patch('mission/:id')
+updateMission(@Param('id') id:string, @Body() mission:UpdateMission)
+{  
+    return this.transferService.UpdateMission(id,mission);
+}
+
+
 
 }

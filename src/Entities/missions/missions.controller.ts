@@ -51,6 +51,10 @@ return this.missionService.getSharedMission()
 }
 
 
+@Get(':id/driver/:idD')
+getMissionByDriver( @Param('id') idAgency : string, @Param('idD') idDriver: string){
+return this.missionService.getMissionByAgencyByDriver(idAgency, idDriver)
+}
 
 
 }

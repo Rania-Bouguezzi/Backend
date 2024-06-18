@@ -8,6 +8,8 @@ import { Agency } from '../agencies/agencies.entity';
 import { SuperAgent } from '../super-agent/superAgent.entity';
 import { Agent } from '../agent/agent.entity';
 import { EtatTransfer, typeStatus } from 'src/Type/Type';
+import { Mission } from '../missions/missions.entity';
+import { UpdateMission } from '../missions/DTO/missionsUpdate.dto';
 
 
 @Injectable()
@@ -17,6 +19,7 @@ export class TransfersService {
     constructor(@InjectRepository(Transfer) private transferRepository : Repository<Transfer> ,
      @InjectRepository(Agency) private agencyRepository : Repository<Agency>,
      @InjectRepository(Agent) private agentRepository : Repository<Agent>,
+     @InjectRepository(Mission) private missionRepository : Repository<Mission>,
     ){}
  
 
@@ -91,12 +94,22 @@ async getTransferCountByAgency(idAgency: string): Promise<number> {
 
 
 
+  async getMission(idTransfer: string) {
+   const update =   this.missionRepository.find({
+      where: { transfers: { id: idTransfer } }
+    });
+    
+  }
 
 
-
-
-
-
+  async UpdateMission(idTransfer: string ,mission: UpdateMission) {
+    const update =  await this.missionRepository.findOne({
+       where: { transfers: { id: idTransfer } }
+     });
+     this.missionRepository.merge(update,mission);
+     return await this.missionRepository.save(update);
+   }
+ 
 
 
 }

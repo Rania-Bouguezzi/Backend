@@ -16,7 +16,7 @@ export class CreateMission {
     date_time_end;
     @IsNumber()
     nbrPassengers:number;
-    @IsNumber()
+   // @IsNumber()
     totalPrice:number;
    // @IsIn(Object.values(typeStatus))
     status:typeStatus;

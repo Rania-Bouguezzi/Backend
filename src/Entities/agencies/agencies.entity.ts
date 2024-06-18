@@ -19,13 +19,13 @@ name:string;
 @Column()
 logo:string;
 @Column()
-email:string;
+emailAgency:string;
 @Column()
 website:string;
 @Column()
-phone:string;
+phoneAgency:string;
 @Column()
-address:string;
+addressAgency:string;
 @Column()
 type:string
 @Column()

@@ -53,7 +53,8 @@ export class MissionsService {
         
         async  delteMission(id:string){
             const mission = await this.missionrepository.findOneOrFail( {where : {id}, relations: ['transfers', 'bus' , 'driver'] });
-            const transferIds = mission.transfers.map(transfer => transfer.id);
+            const
+             transferIds = mission.transfers.map(transfer => transfer.id);
           
 
             // Détacher les transferts de la mission en mettant à jour leurs relations
@@ -113,5 +114,18 @@ export class MissionsService {
                       }
                   )
               }
+
+
+              getMissionByAgencyByDriver(idAgency: string, idDriver: string): Promise<Mission[]> {
+                return this.missionrepository.find({
+                    where: {
+                        isShared: true,
+                        agent : {agency : {id: idAgency}},
+                        driver : {id: idDriver}
+                    },
+                    relations: ['agent', 'agent.agency', 'transfers', 'bus']
+                });
+            }
+            
 
 }

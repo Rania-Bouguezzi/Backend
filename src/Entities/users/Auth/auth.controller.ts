@@ -64,10 +64,10 @@ export class AuthController {
                     id: agent.agency.id,
                     name: agent.agency.name,
                     logo: agent.agency.logo,
-                    email: agent.agency.email,
+                    email: agent.agency.emailAgency,
                     website: agent.agency.website ,
-                    phone: agent.agency.phone,
-                    address: agent.agency.address ,
+                    phone: agent.agency.phoneAgency,
+                    address: agent.agency.addressAgency ,
                     type:agent.agency.type ,
                     status:agent.agency.status ,
                    
@@ -123,10 +123,10 @@ export class AuthController {
 
     @Get('/allUsers')
     getAllUsers(){
-        return this.authService.getAllUsers();
-        
-
-    }
+        return this.authService.getAllUsers();}
+        @Get('/findUsers')
+        findAllUsers(){
+            return this.authService.findAllUsers();}
     @Get(':id')
     getById(@Param('id') id:string){
         return this.authService.getById(id);

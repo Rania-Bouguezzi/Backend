@@ -25,7 +25,7 @@ export class Mission{
     date_time_end:string;
     @Column()
     nbrPassengers:number;
-    @Column()
+    @Column({default:0})
     totalPrice:number;
     @Column({ type: 'enum', enum: typeStatus }) 
     status:typeStatus;

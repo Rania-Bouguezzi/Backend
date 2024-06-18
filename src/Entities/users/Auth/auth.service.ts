@@ -46,13 +46,13 @@ export class AuthService {
     }
     async getAllUsers(): Promise<any[]> {
         const users = await this.usersRepository.find();
-        const customers = await this.customersRepository.find({relations:['agency']});
-        const drivers = await this.driversRepository.find({relations:['agency']});
-        const agents = await this.agentsRepository.find({relations:['agency']});
-        const superAgent = await this.superagentRepository.find({relations:['agency']});
+     //   const customers = await this.customersRepository.find({relations:['agency']});
+        const drivers = await this.driversRepository.find({where: {status: typeStatus.ACTIVE}, relations:['agency']});
+        const agents = await this.agentsRepository.find({where: {status: typeStatus.ACTIVE},relations:['agency']});
+        const superAgent = await this.superagentRepository.find({where: {status: typeStatus.ACTIVE},relations:['agency']});
      
 
-        const allEntities = [...users, ...customers, ...drivers, ...agents, ...superAgent];
+        const allEntities = [...users, ...drivers, ...agents, ...superAgent];
 
         return allEntities;
     }
@@ -91,6 +91,21 @@ async getAdminById(id:string){
   
   
 }
+
+
+
+async findAllUsers(): Promise<any[]> {
+    const drivers = await this.driversRepository.find({where: {status: typeStatus.ACTIVE}, relations:['agency']});
+    const agents = await this.agentsRepository.find({where: {status: typeStatus.ACTIVE},relations:['agency']});
+    const superAgent = await this.superagentRepository.find({where: {status: typeStatus.ACTIVE},relations:['agency']});
+ 
+
+    const allEntities = [...drivers, ...agents, ...superAgent];
+
+    return allEntities;
+}
+
+
 
 
     }
