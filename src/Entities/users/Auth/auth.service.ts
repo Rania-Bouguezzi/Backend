@@ -1,6 +1,6 @@
 
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../users.entity';
 import { Repository } from 'typeorm';
@@ -11,6 +11,7 @@ import { Agent } from 'src/Entities/agent/agent.entity';
 import { SuperAgent } from 'src/Entities/super-agent/superAgent.entity';
 import { typeStatus } from 'src/Type/Type';
 import { Agency } from 'src/Entities/agencies/agencies.entity';
+import { UpdateUser } from '../DTO/usersUpdate.dto';
 
 @Injectable()
 export class AuthService {
@@ -105,7 +106,38 @@ async findAllUsers(): Promise<any[]> {
     return allEntities;
 }
 
+async updateUser(id: string, updateUserDto: UpdateUser): Promise<any> {
+    const driver = await this.driversRepository.findOne({ where: { id }, relations: ['agency'] });
+    if (driver) {
+      await this.driversRepository.update(id, updateUserDto);
+      return await this.driversRepository.findOne({ where: { id }, relations: ['agency'] });
+    }
 
+    const agent = await this.agentsRepository.findOne({ where: { id }, relations: ['agency'] });
+    if (agent) {
+      await this.agentsRepository.update(id, updateUserDto);
+      return await this.agentsRepository.findOne({ where: { id }, relations: ['agency'] });
+    }
+
+    const superAgent = await this.superagentRepository.findOne({ where: { id }, relations: ['agency'] });
+    if (superAgent) {
+      await this.superagentRepository.update(id, updateUserDto);
+      return await this.superagentRepository.findOne({ where: { id }, relations: ['agency'] });
+    }
+
+    throw new NotFoundException('User not found');
+  }
+
+  async getAllAll(): Promise<any[]> {
+    const drivers = await this.driversRepository.find({relations:['agency']});
+    const agents = await this.agentsRepository.find({relations:['agency']});
+    const superAgent = await this.superagentRepository.find({relations:['agency']});
+ 
+
+    const allEntities = [...drivers, ...agents, ...superAgent];
+
+    return allEntities;
+}
 
 
     }

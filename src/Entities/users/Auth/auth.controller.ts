@@ -1,12 +1,13 @@
 
-import { BadRequestException, Body, Controller, Get, Logger,  Request ,Param, Post, Req, Res } from '@nestjs/common';
-import { CreateUser } from '../DTO/usersCreate.dto';
-import * as bcrypt from 'bcrypt';
-import { AuthService } from './auth.service';
-import { JwtService } from '@nestjs/jwt';
+import { BadRequestException, Body, Controller, Get, HttpException, Logger, Param, Patch, Post, Req, Res } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 import { ApiTags } from '@nestjs/swagger';
+import * as bcrypt from 'bcrypt';
 import { AgentService } from 'src/Entities/agent/agent.service';
+import { CreateUser } from '../DTO/usersCreate.dto';
+import { AuthService } from './auth.service';
+import { UpdateUser } from '../DTO/usersUpdate.dto';
 
 @Controller('auth')
 @ApiTags('Auth Users')
@@ -124,6 +125,9 @@ export class AuthController {
     @Get('/allUsers')
     getAllUsers(){
         return this.authService.getAllUsers();}
+        @Get('/getAll')
+    get(){
+        return this.authService.getAllAll();}
         @Get('/findUsers')
         findAllUsers(){
             return this.authService.findAllUsers();}
@@ -139,7 +143,11 @@ export class AuthController {
         
 
     }
-
+    @Patch(':id')
+    updateUser(@Param('id') id:string, @Body() user:UpdateUser)
+    {   
+        return this.authService.updateUser(id,user);
+    }
 
 }
 

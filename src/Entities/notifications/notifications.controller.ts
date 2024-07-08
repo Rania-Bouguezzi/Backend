@@ -52,4 +52,9 @@ getNotifByTransfer(@Param('id') idAgency:string, @Param('idTra') idTransfer:stri
 return this.notifService.getNotifOfTransfer(idAgency, idTransfer);
 }
 
+@Get('booking/:id')
+getBookingByAgency(@Param('id') id:string){
+    return this.notifService.getBookingAccepted(id);
+}
+
 }

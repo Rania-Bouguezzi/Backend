@@ -1,11 +1,14 @@
 import { Injectable } from "@nestjs/common";
 import * as Pusher from "pusher";
+import { Message } from "./message.entity";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 
 @Injectable()
 export class PusherService {
   pusher: Pusher;
   private messages: { username: string; logo:string, agencyName:string, userRecepteur:string, userEmetteur:string, message: string }[] = [];
-constructor(){
+constructor(@InjectRepository(Message) private messageRepository : Repository<Message>){
   
  this.pusher = new Pusher({
         appId: "1795279",
@@ -21,20 +24,21 @@ async trigger(channel: string, event: string, data: any) {
 
   addMessage(username: string, logo:string, agencyName:string ,userRecepteur:string,userEmetteur:string,message: string) {
     const newMessage = { username, logo, agencyName,userRecepteur,userEmetteur,message };
-    this.messages.push(newMessage);
+    this.messageRepository.save(newMessage);
     return newMessage;
   }
 
   getMessages() {
-    return this.messages;
+    return this.messageRepository.find();
   }
 
   getMessageById(idEmetteur:string, idRecepteur: string ) {
-    return this.messages.filter(message => 
-   (message.userEmetteur===idEmetteur) &&  (message.userRecepteur === idRecepteur ) || 
- (message.userRecepteur === idEmetteur ) &&  (message.userEmetteur === idRecepteur )
-     
-    );
+    return this.messageRepository.find({
+      where: [
+        { userEmetteur: idEmetteur, userRecepteur: idRecepteur },
+        { userEmetteur: idRecepteur, userRecepteur: idEmetteur },
+      ],
+    });
   }
 
 }

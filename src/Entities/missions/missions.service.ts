@@ -26,7 +26,7 @@ export class MissionsService {
 
 
     findAll(){
-        return this.missionrepository.find({relations:['transfers', 'agent', 'agent.agency', 'bus', 'driver']});
+        return this.missionrepository.find({relations:['transfers', 'agent', 'agent.agency', 'bus', 'driver', 'feedbacks']});
     }
     
     findOne(id:string){
@@ -52,9 +52,9 @@ export class MissionsService {
         
         
         async  delteMission(id:string){
-            const mission = await this.missionrepository.findOneOrFail( {where : {id}, relations: ['transfers', 'bus' , 'driver'] });
-            const
-             transferIds = mission.transfers.map(transfer => transfer.id);
+            const mission = await this.missionrepository.findOneOrFail( {where : {id}, relations: ['transfers', 'bus' , 'driver', 'feedbacks'] });
+            const   transferIds = mission.transfers.map(transfer => transfer.id);
+           const   feedbacksIds = mission.feedbacks.map(feedback => feedback.id);
           
 
             // Détacher les transferts de la mission en mettant à jour leurs relations
@@ -63,6 +63,11 @@ export class MissionsService {
               .relation(Mission, 'transfers')
               .of(mission)
               .remove(transferIds);
+              await this.missionrepository.manager
+              .createQueryBuilder()
+              .relation(Mission, 'feedbacks')
+              .of(mission)
+              .remove(feedbacksIds);
              
         
            

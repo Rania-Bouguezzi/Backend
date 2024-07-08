@@ -68,7 +68,9 @@ export class TransfersService {
 
  async getTransferByAgency(idAgency:string):Promise <Transfer[]>{
   return  this.transferRepository.find(
-        {
+        { order: {
+          date_time_Depart: 'DESC',
+        },
             where : {agency:{id :idAgency}}
         }
     )

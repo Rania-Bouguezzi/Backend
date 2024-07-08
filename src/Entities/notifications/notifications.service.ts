@@ -86,9 +86,19 @@ async getNotifOfTransfer(idAgency:string,idTransfer:string):Promise<Notification
             },
             
         }
-    )
+    );
 }
 
+  async getBookingAccepted(idAgency: string): Promise<Notification[]> {
+    return this.notificationRepository.find({
+      where: {
+        agent: {
+          agency: { id: idAgency }
+        },
+        notifAccept: true
+      }
+    });
+  }
 
 
 
